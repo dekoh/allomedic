@@ -1,0 +1,26 @@
+SetEnv PHP_VER 5_TEST
+SetEnv REGISTER_GLOBALS 0
+ErrorDocument 401 /404.php
+ErrorDocument 403 /404.php
+ErrorDocument 404 /404.php
+ErrorDocument 414 /404.php
+
+Options +FollowSymLinks
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} /$
+RewriteRule ^(.*)/$ http://%{HTTP_HOST}/$1
+
+
+RewriteRule ^profil/(.+)/(.+)/?$   profil.php?url=$1&page=$2 [L]
+RewriteRule ^profil/(.+)/?$   profil.php?url=$1 [L]
+
+RewriteRule ^rdv/(.+)/?$   rdv.php?url=$1 [L]
+
+RewriteRule ^agenda-options/?$   options.php [L]
+
+RewriteRule ^agenda-jour/(.+)/?$   agenda-jour.php?url=$1 [L]
+
+RewriteCond %{REQUEST_URI} ![\.]
+RewriteCond %{REQUEST_URI} !/tfe/?$
+RewriteRule ^(.*)$   $1\.php [L]
