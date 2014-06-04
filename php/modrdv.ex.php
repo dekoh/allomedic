@@ -94,7 +94,8 @@
 		}
 		if($_POST['posttype']=="suprdv"){
 			$idrdv = $_POST['idrdv'];
-			$req = $bdd->prepare("UPDATE rdv SET annulation='1' WHERE id='$idrdv'");
+			$raison = $_POST['raison'];
+			$req = $bdd->prepare("UPDATE rdv SET annulation='1', raison='$raison' WHERE id='$idrdv'");
 			$req->execute();
 			$req->closeCursor();
 		}

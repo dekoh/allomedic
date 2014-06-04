@@ -38,10 +38,9 @@
 		$mh=$top[0]*60;
 		$min=$mh+$top[1];
 		$top=$min-$dj;
-		if($top>0){
+		
 			$top= $top*$ratio;
-			$top=$top+4;
-		}
+		
 		return $top;
 	}
 	function topp($hd, $dj, $ratio=1.8){
@@ -177,6 +176,109 @@
 		}
 		return $heightot;
 	}
+	function afficherPlagelibre($datejour,$jour,$bdd,$id){
+		$id=intval($id);
+		$datejour= str_replace('/', '-',$datejour);
+		$datejour = strtotime($datejour);
+		$datelendemain= $datejour + 86400;
+		$datehier= time() - 86400;
+		$fer = false;
+		$ferie = $bdd->query("select * from ferie");
+		while($jourferie = $ferie->fetch()){
+			if($jourferie['date']==$datejour){
+				$fer = true;
+				$nomfer= $jourferie['nom'];
+			}
+		}
+		
+		if($fer!=true){						
+			$plage = $bdd->query("select * from plages where idmed=$id and jour='$jour' order by debut");
+			while($pla = $plage->fetch()){
+					if($pla['type']=="rdv" && $datejour>$datehier){
+					$debut = $pla['debut'];
+					$debut = $debut*60;
+					$debut = $debut + $datejour;
+					$fin = $pla['fin'];
+					$fin = $fin*60;
+					$fin = $fin + $datejour;
+					$premd = $debut;
+					$rdvtj = $bdd->query("select * from rdv where idmed=$id and annulation=0 and datefin between $datejour and $datelendemain");
+					
+					$derd = $debut;
+					/* On vérifie si il y a un rendez-vous qui commence avant la plage horraire et qui se termine dans la plage horraire	*/
+					while($rdvt = $rdvtj->fetch()){
+						if($rdvt['datefin']>$debut&&$rdvt['date']<=$debut){
+							$derdd = $rdvt['datefin'];
+						}
+					}
+					
+					$rdv = $bdd->query("select * from rdv where idmed=$id and annulation=0 and date between $debut and $fin order by date ");
+					$count = $rdv->rowCount();		
+					$med = $bdd->query("select * from utilisateurs where id=$id");		
+					$medic = $med->fetchAll();
+					$nommed = $medic[0]['nom'];		
+					/* création des plages libres */
+					while($rdvj = $rdv->fetch()){
+						
+						if($rdvj['date']>$premd){
+							$debutad = $premd;
+							$finad = $rdvj['date'];
+							$longad = $finad - $debutad;
+							$longad = $longad / 60;
+							$nbpl = $longad / $pla['duree'];
+							$debutrdv = $debutad;
+							for ($i = 1; $i <= $nbpl; $i++) {
+								$dbrdv = date("H:i", $debutrdv);
+								$dursec = $pla['duree']*60;
+								$firdv = $debutrdv + $dursec;
+								$frdv = date("H:i", $firdv);
+								$dateentierrdv = recupjour(date("D", $debutrdv))." ".date("d/m/Y", $debutrdv);
+							    echo "<li class='md-trigger'  data-modal='addrdvpat' data-heureb='".$dbrdv."' data-dateb='".$dateentierrdv."' data-nommed='".$nommed."' data-duree='".$pla['duree']."' data-idmed='".$id."' data-date='".$debutrdv."'>".$dbrdv." - ".$frdv."</li>";
+							    $debutrdv = $firdv;
+							}
+						}
+						$premd = $rdvj['datefin'];
+						if($rdvj['datefin']>$derd){
+							$derd = $rdvj['datefin'];
+						}
+													
+					}
+					/* On complete si il y a de la place libre a la fin de la plage horraire */
+					
+					if($derd<$fin){
+						if(isset($derdd)&&$derdd>$derd){
+							
+								$debutad = $derdd;
+							
+						}
+						else{
+							$debutad = $derd;
+						}
+						
+						$finad = $fin;
+						$longad = $finad - $debutad;
+						$longad = $longad / 60;
+						$nbpl = $longad / $pla['duree'];
+						$debutrdv = $debutad;
+						for ($i = 1; $i <= $nbpl; $i++) {
+							$dbrdv = date("H:i", $debutrdv);
+							$dursec = $pla['duree']*60;
+							$firdv = $debutrdv + $dursec;
+							$frdv = date("H:i", $firdv);
+							$dateentierrdv = recupjour(date("D", $debutrdv))." ".date("d/m/Y", $debutrdv);
+						    echo "<li class='md-trigger' data-modal='addrdvpat'  data-modal='addrdvpat' data-heureb='".$dbrdv."' data-dateb='".$dateentierrdv."' data-nommed='".$nommed."' data-duree='".$pla['duree']."' data-idmed='".$id."' data-date='".$debutrdv."'>".$dbrdv." - ".$frdv."</li>";
+						    $debutrdv = $firdv;
+						}
+						
+					}
+				}
+			}
+		}
+		else{
+			echo "<div class='nomjour'>".$nomfer."</div>";
+		}
+	}
+
 	function mintoh($min){
 		$h = floor($min / 60);
 		$mh = $h * 60;

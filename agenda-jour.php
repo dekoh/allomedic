@@ -13,7 +13,7 @@ error_reporting(E_ALL);
         <title>Agenda - Allomedic - Prise de rendez-vous chez le médecin</title>
 
   		<?php
-  			$setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répertoires virtuels
+  			$setRoot = true; 
 			include('includes/metahead.inc.php');
 		?>
     </head>

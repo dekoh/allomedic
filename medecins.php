@@ -28,7 +28,22 @@ $setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répe
 		?>
 	    <div id="container">
 	    	<div id="content" class="medecins">
-	    		<a href="profil/1" class="col">
+	    		<?php
+		    		$med = $bdd->query("SELECT * FROM liens WHERE idpat=$iduser");
+		    		while($idmed=$med->fetch()){
+		    			$idmedic = $idmed['idmed'];
+		    			$medic = $bdd->query("SELECT * FROM utilisateurs WHERE id=$idmedic");
+		    			$imedic = $medic->fetchAll();
+			    		echo '<a href="profil/'.$idmedic.'" class="col">
+		    		<div class="avatar" style="background:url(images/avatar/'.$idmedic.'.jpg) no-repeat; background-size: cover;"></div>
+		    		<h1>Dr. '.$imedic[0]['nom'].'</h1>
+		    		<p>'.$imedic[0]['typemed'].'</p>
+		    		
+	    		</a>';
+		    		}
+	    		?>
+	    		<!--
+<a href="profil/1" class="col">
 		    		<div class="avatar" style="background:url(images/avatar/1.jpg) no-repeat; background-size: cover;"></div>
 		    		<h1>Dr. Cabrol</h1>
 		    		<p>Médecin généraliste</p>
@@ -40,6 +55,7 @@ $setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répe
 		    		<p>Cardiologue</p>
 		    		
 	    		</a>
+-->
 	    	</div>
 	    </div>
 	    <?php
@@ -48,6 +64,7 @@ $setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répe
 	    <script>
 		    $(document).ready(function(){
 				$("header #nav li a").removeClass('active');
+				$("header #nav li a#patients").addClass('active');
 				 				 
 			});
 	    </script>

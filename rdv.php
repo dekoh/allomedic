@@ -97,7 +97,7 @@ error_reporting(E_ALL);
 			    	<?php
 				    	}
 				    	else{
-				    		$nompat = v;
+				    		
 					    	?>
 					    	<h2 class="col size-2"><?php echo $infordv[0]['nompatient'];?></h2>
 					    	<?php

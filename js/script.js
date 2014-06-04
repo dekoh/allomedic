@@ -26,10 +26,17 @@ $(document).ready(function(){
 		
 				
 	});
-	
+	$(".closefeed").click(function(){
+		$(this).parent(".feedback").fadeOut();
+	});
 	$(".md-trigger").click(function(){
 		var datadate = $(this).data("date");
 		var dataheure = $(this).data("heure");
+		var datadateb = $(this).data("dateb");
+		var dataheureb = $(this).data("heureb");
+		var datanommed = $(this).data("nommed");
+		var dataidmed = $(this).data("idmed");
+		var dataduree = $(this).data("duree");
 		var datatype = $(this).data("type");
 		var datamin = $(this).data("min");
 		var dataemail = $(this).data("email");
@@ -41,6 +48,12 @@ $(document).ready(function(){
 		var datadn = $(this).data("dn");
 		$("#addrdv #inputdate").val(datadate);
 		$("#addrdv #inputheure").val(dataheure);
+		$("#addrdvpat #jourdurdv").html(datadateb);
+		$("#addrdvpat #heuredurdv").html(dataheureb);
+		$("#addrdvpat #nomdocteur").html(datanommed);
+		$("#addrdvpat #inputduree").val(dataduree);
+		$("#addrdvpat #inputidmed").val(dataidmed);
+		$("#addrdvpat #inputdate").val(datadate);
 		$("#modifemail #inputemail").val(dataemail);
 		$("#modifnom #inputnom").val(datanom);
 		$("#modifnom #inputprenom").val(dataprenom);

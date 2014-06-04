@@ -29,7 +29,7 @@ error_reporting(E_ALL);
 	    <div id="container">
 	    	<div id="content">
 	    	<a class="button mobmarbot col pr-5" href="agenda"> &lt;- Retour à l'agenda</a>
-	    	<button  class="md-trigger mobmarbot col pr-5" data-modal="addpla">+ Ajout d'une plage horraire</button>
+	    	<button  class="md-trigger mobmarbot col pr-5" data-modal="addpla">+ Ajout d'une plage horaire</button>
 		    	<table id="tableagenda">
 					<thead>
 						<tr>

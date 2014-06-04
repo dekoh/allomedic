@@ -109,6 +109,7 @@ error_reporting(E_ALL);
 	    	</div>
 	    </div>
 	    <?php
+	    	echo $idpro;
 		    include('includes/modal.inc.php');	
 		?>
 	    <script>
@@ -117,10 +118,6 @@ error_reporting(E_ALL);
 				 				 
 			});
 	    </script>
-	    <!--
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-	    <script src="js/jquery.stickyheader.js"></script>
--->
     </body>
 </html>
 <?php

@@ -26,6 +26,9 @@ error_reporting(E_ALL);
 			
 		?>
 	    <div id="container">
+	    	<?php
+		    	include('includes/feedback.inc.php');
+	    	?>
 	    	<div id="content">
 		    	<?php
 					include('php/profil.ex.php');

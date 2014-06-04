@@ -85,6 +85,11 @@
 			}
 			$req = $bdd->prepare('INSERT INTO rdv (idmed, idpat, date, datefin, type, motif, nompatient) VALUES(?, ?, ?, ?, ?, ?, ?)');
 			$req->execute(array($idmed, $patientid, $daterdv, $daterdvfin, $typerdv, $motifrdv, $nompatient));
+			?>
+			<script LANGUAGE="JavaScript">
+				document.location.href="agenda/<?php echo $daterdv; ?>";
+			</script>
+			<?php
 			}
 		}
 		if($_POST['posttype']=="newpla"){
@@ -109,6 +114,23 @@
 			$typerdv = "cong";
 			$req = $bdd->prepare('INSERT INTO rdv (idmed, date, datefin, type) VALUES(?, ?, ?, ?)');
 			$req->execute(array($idmed, $datecon, $dateconfin, $typerdv));
+
+		}
+		if($_POST['posttype']=="newrdvpat"){
+			$idmed = $_POST['idmed'];
+			$daterdv = $_POST['date'];
+			$duree = $_POST['duree'];
+			$duree = $duree * 60;
+			$daterdvfin = $daterdv + $duree;
+			$motifrdv = $_POST['motif'];
+			$patientid =  $_POST['idpat'];
+			$nomp = $bdd->query("SELECT * FROM utilisateurs WHERE id=$patientid");
+			$nompat = $nomp->fetchAll();
+			$nompatient = $nompat[0]['nom'].' '.$nompat[0]['prenom'];
+			$typerdv = "rdv";
+			
+		$req = $bdd->prepare('INSERT INTO rdv (idmed, idpat, date, datefin, type, motif, nompatient) VALUES(?, ?, ?, ?, ?, ?, ?)');
+			$req->execute(array($idmed, $patientid, $daterdv, $daterdvfin, $typerdv, $motifrdv, $nompatient));
 
 		}
 	}

@@ -36,6 +36,22 @@
 				 if(!preg_match($motifb,$email)){
 					 $erreur['email'][0] = "L'email n'est pas valide"; 
 				 }
+				 else{
+					 $mail = $bdd->query("SELECT email,id FROM utilisateurs");
+					 while($emai=$mail->fetch()){
+						 if($emai['email']==$email){
+						 	$id = $emai['id'];
+						 	$lien = $bdd->query("SELECT * FROM liens WHERE idpat=$id");
+						 	$liens = $lien->fetchAll();
+						 	if($liens[0]['idmed']==$_SESSION['userid']){
+							 	$erreur['email'][2] = "Il existe déjà un patient avec cet email";
+						 	}
+						 	else{
+							 	$makelink=true;
+						 	}
+						 }
+					 }
+				 }
 			 }
 			 else{
 				 $avertissement['email'][1] = "L'email n'est pas rempli";
@@ -55,8 +71,10 @@
 				 echo '<script>$(document).ready(function(){$("#addpat").addClass("md-show");});</script>';
 			 }
 			 else{
-				$req = $bdd->prepare('INSERT INTO utilisateurs (nom,prenom,email,tel,type,datenaissance,sexe,adresse) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
-				$req->execute(array($nom, $prenom, $email, $tel, $_POST['type'], $dateb, $sexe, $adresse));
+			 	if(!isset($makelink)){
+					$req = $bdd->prepare('INSERT INTO utilisateurs (nom,prenom,email,tel,type,datenaissance,sexe,adresse) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
+					$req->execute(array($nom, $prenom, $email, $tel, $_POST['type'], $dateb, $sexe, $adresse));
+				}
 				$emailpat = $bdd->query("select id from utilisateurs where email='$email' and nom='$nom' and prenom='$prenom'");
 				$emailpat = $emailpat->fetchAll();
 				$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');

@@ -12,6 +12,7 @@ error_reporting(E_ALL);
         <title>Agenda - Allomedic - Prise de rendez-vous chez le médecin</title>
 
   		<?php
+  			$setRoot = true; 
 			include('includes/metahead.inc.php');
 		?>
     </head>
@@ -34,7 +35,6 @@ error_reporting(E_ALL);
 	    		if(isset($_GET['date'])){
 		    		$dateauj = explode("/",date("d/m/Y", intval($_GET['date'])));
 		    		$tmstp = intval($_GET['date']);
-		    		
 	    		}
 	    		else{
 	    			$dateauj= explode("/",date("d/m/Y"));
@@ -106,7 +106,7 @@ error_reporting(E_ALL);
 	    			$datethu=$tmstp + (4*86400);
 	    			$datefri=$tmstp + (5*86400);
 	    			$datesat=$tmstp + (6*86400);
-	    			$datesun=$tmstp;
+	    			$datesun=$tmstp + (7*86400);
 	    		}
 	    		$datemonday = date("d/m/Y", $datemon);
 	    		$datetuesday = date("d/m/Y", $datetue);
@@ -123,8 +123,8 @@ error_reporting(E_ALL);
 	    		
 	    	?>
 	    
-	    	<a href="agenda?date=<?php echo $datesemm ;?>" class="button fleche gauche"><div><</div></a>
-	    	<a href="agenda?date=<?php echo $datesemp ;?>" class="button fleche droite"><div>></div></a>
+	    	<a href="agenda/<?php echo $datesemm ;?>" class="button fleche gauche"><div><</div></a>
+	    	<a href="agenda/<?php echo $datesemp ;?>" class="button fleche droite"><div>></div></a>
 	    	<?php 
 	    		
 	    		if(date("m", $datemon)==date("m", $datesun)){

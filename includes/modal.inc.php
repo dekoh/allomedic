@@ -1,3 +1,4 @@
+				<!-- Fenetre de test -->
 				<div class="md-modal md-effect-1" id="modal-1">
 					<div class="md-content">
 						<h3>Modal Dialog</h3>
@@ -21,15 +22,14 @@
 					if(isset($_GET['url'])){
 						$idpro = $_GET['url'];
 					}
-					else{
-						$idpro = "";
-					}
+					
 				?>
+				<!-- Fenetre de modification d'email -->
 				<div class="md-modal md-effect-1" id="modifemail">
 					<div class="md-content">
 						<h3>Modification de l'email</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}}?>" method="post">
 								<div id="champemail" class="col pr-10">
 									<input type="text" id="inputemail" name="email" placeholder="eMail" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['email'])){echo "value='".$_POST['email']."'";}} }?>/>
 									<?php
@@ -53,11 +53,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de modification du nom et du prénom -->
 				<div class="md-modal md-effect-1" id="modifnom">
 					<div class="md-content">
 						<h3>Modification du nom</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}} ?>" method="post">
 								<div id="champprenom" class="col pr-5">
 									<input type="text" id="inputprenom" name="prenom" placeholder="Prénom*"<?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['prenom'])){echo "value='".$_POST['prenom']."'";}} }?>/>
 									<?php
@@ -95,11 +96,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de modification du numéro de téléphone -->
 				<div class="md-modal md-effect-1" id="modiftel">
 					<div class="md-content">
 						<h3>Modification du numéro de téléphone</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}} ?>" method="post">
 								<div id="champtel" class="col pr-10">
 									<input type="text" id="inputtel" name="telephone" placeholder="Téléphone" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['telephone'])){echo "value='".$_POST['telephone']."'";}} }?>/>
 									<?php
@@ -118,11 +120,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de modification de l'adresse -->
 				<div class="md-modal md-effect-1" id="modifadr">
 					<div class="md-content">
 						<h3>Modification de l'adresse</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}} ?>" method="post">
 								<div id="champadresse" class="col pr-10">
 									<textarea id="champ-adresse" name="adresse" placeholder="Adresse"><?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['adresse'])){echo $_POST['adresse'];}} }?></textarea>
 									<?php
@@ -142,11 +145,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de modification du sexe -->
 				<div class="md-modal md-effect-1" id="modifsexe">
 					<div class="md-content">
 						<h3>Modification du sexe</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}} ?>" method="post">
 								<div class="col bot pr-10">
 								<select id="selectsexe" name="sexe">
 									
@@ -165,11 +169,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de modification de la date de naissance -->
 				<div class="md-modal md-effect-1" id="modifdatenaissance">
 					<div class="md-content">
 						<h3>Modification de la date de naissance</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}} ?>" method="post">
 								<div id="champdate" class="col pr-10">
 									<input type="text" id="inputdatenaissance" name="date-naissance" placeholder="Date de naissance (jj/mm/aaaa)" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['date-naissance'])){echo "value='".$_POST['date-naissance']."'";}} }?>/>
 									<?php
@@ -189,11 +194,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de modification de la photo -->
 				<div class="md-modal md-effect-1" id="modifphoto">
 					<div class="md-content">
 						<h3>Modification de la photo</h3>
 						<div>
-							<form action="profil/<?php echo $idpro; ?>" method="post" enctype="multipart/form-data">
+							<form action="profil<?php if(isset($idpro)){if($idpro!=""||$idpro!=" "){echo "/".$idpro;}} ?>" method="post" enctype="multipart/form-data">
 								<div id="champphoto" class="col pr-10">
 								<input type="file" name="photo" />
 								</div>
@@ -206,6 +212,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre de suppresion de compte -->
 				<div class="md-modal md-effect-1" id="suppat">
 					<div class="md-content">
 						<h3>Suppression de pattient</h3>
@@ -221,12 +228,14 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre d'annulation de rendez-vous -->
 				<div class="md-modal md-effect-1" id="suprdv">
 					<div class="md-content">
 						<h3>Annulation du rendez-vous</h3>
 						<div>
 							<form action="rdv/<?php echo $idrdv; ?>" method="post">
 								<p class="col bot">Voulez-vous vraiment annuler ce rendez-vous?</p>
+								<input type="text" name="raison" placeholder="Raison"/>
 								<input type="hidden" name="posttype" value="suprdv"/>
 								<input type="hidden" name="idrdv" value="<?php echo $idrdv; ?>"/>
 								<input type="hidden" name="url" value="<?php echo $_SERVER['REQUEST_URI'];?>"/>
@@ -236,6 +245,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre d'ajout de patient -->
 		    	<div class="md-modal md-effect-1" id="addpat">
 					<div class="md-content">
 						<h3>Ajout d'un patient</h3>
@@ -280,6 +290,8 @@
 										}
 										if(isset($erreur['email'][1])){
 											echo '<small class="error">l\'email n\'est pas rempli</small>';
+										}if(isset($erreur['email'][2])){
+											echo '<small class="error">Il existe déjà un patient avec cette adresse email</small>';
 										}
 									?>
 								</div>
@@ -337,6 +349,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre d'ajout de rendez-vous -->
 		    	<div class="md-modal md-effect-1" id="addrdv">
 					<div class="md-content">
 						<h3>Ajout d'un rendez-vous</h3>
@@ -395,6 +408,28 @@
 						</div>
 					</div>
 				</div>
+				<!-- Patient -->
+				<div class="md-modal md-effect-1" id="addrdvpat">
+					<div class="md-content">
+						<h3>Ajout d'un rendez-vous</h3>
+						<div>
+							<p>Rendez-vous avec le docteur <span id="nomdocteur"></span></p>
+							<p>Le <span id="jourdurdv"></span> à <span id="heuredurdv"></span></p>
+							<form action="rendez-vous" method="post">
+								<input type="text"  name="motif" placeholder="Motif"/>
+								<input type="hidden" id="inputidmed" name="idmed" value=""/>
+								<input type="hidden" id="inputdate" name="date" value=""/>
+								<input type="hidden" id="inputduree" name="duree" value=""/>
+								<input type="hidden" name="idpat" value="<?php echo $_SESSION['userid']; ?>"/>
+								<input type="hidden" name="posttype" value="newrdvpat"/>
+								<button class="md-submit">Valider</button>
+							</form>					
+								<button class="md-close">Annuler</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Fenetre de modification de rendez-vous -->
 				<div class="md-modal md-effect-1" id="modrdv">
 					<div class="md-content">
 						<h3>Modification du rendez-vous</h3>
@@ -455,7 +490,7 @@
 						</div>
 					</div>
 				</div>
-
+				<!-- Fenetre d'ajout d'une plage -->
 				<div class="md-modal md-effect-1" id="addpla">
 					<div class="md-content">
 						<h3>Ajout d'une plage</h3>
@@ -492,7 +527,7 @@
 						</div>
 					</div>
 				</div>
-
+				<!-- Fenetre d'ajout d'un congé -->
 				<div class="md-modal md-effect-1" id="addcon">
 					<div class="md-content">
 						<h3>Ajout d'un congé</h3>
@@ -548,6 +583,7 @@
 		    	<div class="md-overlay"></div>
 		    	<script src="js/classie.js"></script>
 		    	<script src="js/modalEffects.js"></script>
+		    	<!-- Liste des patients du médecin pour l'autocomplete -->
 		    	<script>
 			    	$(function() {
 					    var patients = [
