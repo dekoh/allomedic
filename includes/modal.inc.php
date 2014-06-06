@@ -245,6 +245,22 @@
 						</div>
 					</div>
 				</div>
+				<!-- Fenetre d'annulation de rendez-vous -->
+				<div class="md-modal md-effect-1" id="suppla">
+					<div class="md-content">
+						<h3>Suppression de plage</h3>
+						<div>
+							<form action="agenda-options" method="post">
+								<p class="col bot">Voulez-vous vraiment supprimer cette plage?</p>
+								<input type="hidden" name="posttype" value="suppla"/>
+								<input type="hidden" id="inputid" name="idpla" value=""/>
+								<input type="hidden" name="url" value="<?php echo $_SERVER['REQUEST_URI'];?>"/>
+								<button class="md-submit">Oui</button>
+							</form>					
+								<button class="md-close">Non</button>	
+						</div>
+					</div>
+				</div>
 				<!-- Fenetre d'ajout de patient -->
 		    	<div class="md-modal md-effect-1" id="addpat">
 					<div class="md-content">
@@ -307,9 +323,13 @@
 								<div id="champdate" class="col pr-7">
 									<input type="text" name="date-naissance" placeholder="Date de naissance (jj/mm/aaaa)" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['date-naissance'])){echo "value='".$_POST['date-naissance']."'";}} }?>/>
 									<?php
-										if(isset($erreur['datenaissance'])){
+										if(isset($erreur['datenaissance'][0])){
 											echo '<script>$("#champdate").addClass("champ-erreur");</script>';
 											echo '<small class="error">La date de naissance n\'est pas valide. Veuillez vérifier à respecter le format: jj/mm/aaaa</small>';
+										}
+										if(isset($erreur['datenaissance'][1])){
+											echo '<script>$("#champdate").addClass("champ-erreur");</script>';
+											echo '<small class="error">La date de naissance ne parait pas normale</small>';
 										}
 									?>
 									
@@ -374,6 +394,15 @@
 											echo '<small class="error">Le champ heure est vide. </small>';
 										}
 									?></div></div></div>
+									<?php
+									if(isset($erreur)){if(count($erreur)>0){
+										if(isset($_POST['type'])){
+											$type = $_POST['type'];
+											echo '<script>$(document).ready(function(){$("#selecttype").val("'.$type.'").attr("selected", "selected");});</script>';
+										}
+									}
+									}
+								?>
 								<select id="selecttype" name="type" class="col pr-5">
 									
 									<option value="rdv" class="grise">Normale</option>
@@ -454,6 +483,15 @@
 											echo '<small class="error">Le champ heure est vide. </small>';
 										}
 									?></div></div></div>
+									<?php
+									if(isset($erreur)){if(count($erreur)>0){
+										if(isset($_POST['type'])){
+											$type = $_POST['type'];
+											echo '<script>$(document).ready(function(){$("#selecttype").val("'.$type.'").attr("selected", "selected");});</script>';
+										}
+									}
+									}
+								?>
 								<select id="selecttype" name="type" class="col pr-5">
 									
 									<option value="rdv" class="grise">Normale</option>
@@ -467,7 +505,7 @@
 											echo '<script>$("#inputduree").addClass("champ-erreur");</script>';
 											}
 										if(isset($erreur['duree'][0])){
-											echo '<small class="error">La durée n\'est pas valide. Veuillez vérifier que../dekadmin.php vous entrez bien un nombre en minutes.</small>';
+											echo '<small class="error">La durée n\'est pas valide. Veuillez vérifier que vous entrez bien un nombre en minutes.</small>';
 										}
 										if(isset($erreur['duree'][1])){
 											echo '<small class="error">Le champ durée est vide. </small>';
@@ -497,6 +535,15 @@
 						<div>
 							<form action="agenda-options" method="post">
 								<!-- <label for="selectjour">Jour: </label> -->
+								<?php
+									if(isset($erreur)){if(count($erreur)>0){
+										if(isset($_POST['jour'])){
+											$type = $_POST['jour'];
+											echo '<script>$(document).ready(function(){$("#selectjour").val("'.$jour.'").attr("selected", "selected");});</script>';
+										}
+									}
+									}
+								?>
 								<select id="selectjour" name="jour" class="">
 									
 									<option value="mon">Lundi</option>
@@ -508,10 +555,37 @@
 									<option value="sun">Dimanche</option>
 									
 								</select>
-								<input type="text" name="hdebut" placeholder="Début - hh:mm" class="mabot col pr-5"/>
-								<input type="text" name="hfin" placeholder="Fin - hh:mm" class="mabot maleft col pr-5"/>
+								<div  class="col pr-5"  id="utinputheure"><input type="text" name="hdebut" placeholder="Début - hh:mm" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['hdebut'])){echo "value='".$_POST['hdebut']."'";}} }?>/><?php
+										if(isset($erreur['heured'][0])){
+											echo '<script>$("#utinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">L\'heure n\'est pas valide. Veuillez vérifier à respecter le format: hh:mm</small>';
+										}
+										if(isset($erreur['heured'][1])){
+											echo '<script>$("#utinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">Le champ heure est vide. </small>';
+										}
+									?></div>
+								<div  class="maleft col pr-5"  id="tinputheure"><input type="text" name="hfin" placeholder="Fin - hh:mm" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['hfin'])){echo "value='".$_POST['hfin']."'";}} }?>/><?php
+										if(isset($erreur['heuref'][0])){
+											echo '<script>$("#tinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">L\'heure n\'est pas valide. Veuillez vérifier à respecter le format: hh:mm</small>';
+										}
+										if(isset($erreur['heuref'][1])){
+											echo '<script>$("#tinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">Le champ heure est vide. </small>';
+										}
+									?></div>
 								<input type="hidden" id="inputidmed" name="idmed" value="<?php if($_SESSION['type']=="med"){echo $_SESSION['userid'];} ?>" />
 								<input type="hidden" name="posttype" value="newpla" />
+								<?php
+									if(isset($erreur)){if(count($erreur)>0){
+										if(isset($_POST['type'])){
+											$type = $_POST['type'];
+											echo '<script>$(document).ready(function(){$("#selecttype").val("'.$type.'").attr("selected", "selected");});</script>';
+										}
+									}
+									}
+								?>
 								<select id="selecttype" name="type" class="col pr-5">
 									
 									<option value="rdv" class="grise">Normale</option>
@@ -519,7 +593,113 @@
 									<option value="autre">Autre</option>
 									
 								</select>
-								<input type="text" name="duree" placeholder="Durée en minutes" class="mabot maleft col pr-5"/>
+								<div id="inputduree"  class="maleft col pr-5" ><input type="text" name="duree" placeholder="Durée en minutes" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['duree'])){echo "value='".$_POST['duree']."'";}} }?>/><?php
+										if(isset($erreur['duree'])){
+											echo '<script>$("#inputduree").addClass("champ-erreur");</script>';
+											}
+										if(isset($erreur['duree'][0])){
+											echo '<small class="error">La durée n\'est pas valide. Veuillez vérifier que  vous entrez bien un nombre en minutes.</small>';
+										}
+										if(isset($erreur['duree'][1])){
+											echo '<small class="error">Le champ durée est vide. </small>';
+										}
+										if(isset($erreur['duree'][2])){
+											echo '<small class="error">La durée ne peut pas être négative. </small>';
+										}
+										if(isset($erreur['duree'][3])){
+											echo '<small class="error">La durée est anormalement élevée... </small>';
+										}
+									?></div>
+								
+								<button class="md-submit">Enregistrer</button>
+							</form>					
+								<button class="md-close">Annuler</button>
+						</div>
+					</div>
+				</div>
+				<!-- Modification de plage -->
+				<div class="md-modal md-effect-1" id="modpla">
+					<div class="md-content">
+						<h3>Modification d'une plage</h3>
+						<div>
+							<form action="agenda-options" method="post">
+								<!-- <label for="selectjour">Jour: </label> -->
+								<?php
+									if(isset($erreur)){if(count($erreur)>0){
+										if(isset($_POST['jour'])){
+											$type = $_POST['jour'];
+											echo '<script>$(document).ready(function(){$("#selectjour").val("'.$jour.'").attr("selected", "selected");});</script>';
+										}
+									}
+									}
+								?>
+								<select id="selectjour" name="jour" class="">
+									
+									<option value="mon">Lundi</option>
+									<option value="tue">Mardi</option>
+									<option value="wed">Mercredi</option>
+									<option value="thu">Jeudi</option>
+									<option value="fri">Vendredi</option>
+									<option value="sat">Samedi</option>
+									<option value="sun">Dimanche</option>
+									
+								</select>
+								<div  class="col pr-5"  id="utinputheure"><input type="text" name="hdebut" placeholder="Début - hh:mm" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['hdebut'])){echo "value='".$_POST['hdebut']."'";}} }?>/><?php
+										if(isset($erreur['heured'][0])){
+											echo '<script>$("#utinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">L\'heure n\'est pas valide. Veuillez vérifier à respecter le format: hh:mm</small>';
+										}
+										if(isset($erreur['heured'][1])){
+											echo '<script>$("#utinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">Le champ heure est vide. </small>';
+										}
+									?></div>
+								<div  class="maleft col pr-5"  id="tinputheure"><input type="text" name="hfin" placeholder="Fin - hh:mm" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['hfin'])){echo "value='".$_POST['hfin']."'";}} }?>/><?php
+										if(isset($erreur['heuref'][0])){
+											echo '<script>$("#tinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">L\'heure n\'est pas valide. Veuillez vérifier à respecter le format: hh:mm</small>';
+										}
+										if(isset($erreur['heuref'][1])){
+											echo '<script>$("#tinputheure").addClass("champ-erreur");</script>';
+											echo '<small class="error">Le champ heure est vide. </small>';
+										}
+									?></div>
+								<input type="hidden" id="inputidmed" name="idmed" value="<?php if($_SESSION['type']=="med"){echo $_SESSION['userid'];} ?>" />
+								<input id="inputid" type="hidden" name="idpla"/>
+								<input type="hidden" name="posttype" value="modpla" />
+								<?php
+									if(isset($erreur)){if(count($erreur)>0){
+										if(isset($_POST['type'])){
+											$type = $_POST['type'];
+											echo '<script>$(document).ready(function(){$("#selecttype").val("'.$type.'").attr("selected", "selected");});</script>';
+										}
+									}
+									}
+								?>
+								<select id="selecttype" name="type" class="col pr-5">
+									
+									<option value="rdv" class="grise">Normale</option>
+									<option value="domicile">Domicile</option>
+									<option value="autre">Autre</option>
+									
+								</select>
+								<div id="inputduree"  class="maleft col pr-5" ><input type="text" name="duree" placeholder="Durée en minutes" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['duree'])){echo "value='".$_POST['duree']."'";}} }?>/><?php
+										if(isset($erreur['duree'])){
+											echo '<script>$("#inputduree").addClass("champ-erreur");</script>';
+											}
+										if(isset($erreur['duree'][0])){
+											echo '<small class="error">La durée n\'est pas valide. Veuillez vérifier que  vous entrez bien un nombre en minutes.</small>';
+										}
+										if(isset($erreur['duree'][1])){
+											echo '<small class="error">Le champ durée est vide. </small>';
+										}
+										if(isset($erreur['duree'][2])){
+											echo '<small class="error">La durée ne peut pas être négative. </small>';
+										}
+										if(isset($erreur['duree'][3])){
+											echo '<small class="error">La durée est anormalement élevée... </small>';
+										}
+									?></div>
 								
 								<button class="md-submit">Enregistrer</button>
 							</form>					

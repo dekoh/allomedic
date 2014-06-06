@@ -139,6 +139,7 @@ header #nav li a#patients:before{
 .feedcontainer{
 	position: absolute;
 	width: 100%;
+	z-index: 6;
 }
 .feedback{
 	width: 100%;

@@ -15,7 +15,10 @@
 			 $motifb = "#^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]{2,}[.][a-zA-Z]{2,4}$#";
 			 $motiftel = "#^[0-9.+]{9,13}$#";
 			 $erreur = array();
+			 $msg = array();
 			 $avertissement = array();
+			 $sel = $bdd->query("SELECT * FROM utilisateurs WHERE id=$_SESSION['userid']");
+			 $nommedic = $sel->fetchAll();
 			 if(!empty($prenom)){
 				 if(preg_match($motif,$prenom)){
 					 $erreur['prenom'][0] = "Le prénom n'est pas valide"; 
@@ -42,19 +45,22 @@
 						 if($emai['email']==$email){
 						 	$id = $emai['id'];
 						 	$lien = $bdd->query("SELECT * FROM liens WHERE idpat=$id");
-						 	$liens = $lien->fetchAll();
-						 	if($liens[0]['idmed']==$_SESSION['userid']){
-							 	$erreur['email'][2] = "Il existe déjà un patient avec cet email";
+						 	while($liens = $lien->fetch()){
+							 	if($liens['idmed']==$_SESSION['userid']){
+							 		$erreur['email'][2] = "Il existe déjà un patient avec cet email";
+							 	}
+							 	else{
+								 	$makelink=true;
+							 	}
 						 	}
-						 	else{
-							 	$makelink=true;
-						 	}
+						 	
 						 }
 					 }
+					 
 				 }
 			 }
 			 else{
-				 $avertissement['email'][1] = "L'email n'est pas rempli";
+				 $avertissement[] = "L'email n'est pas rempli";
 			 }
 			 if(!empty($tel)){
 				 if(!preg_match($motiftel,$tel)){
@@ -64,7 +70,13 @@
 			 if(!empty($dateb)){
 			 	if(validateDate($dateb)){
 				 
-					 $erreur['datenaissance'] = "La date de naissance n'est pas valide"; 
+					 $erreur['datenaissance'][0] = "La date de naissance n'est pas valide"; 
+				 }
+				 else{
+					 list($dd,$mm,$yyyy) = explode('/',$dateb);
+					 if($yyyy>date("Y")||$yyyy<1900){
+						 $erreur['datenaissance'][1] = "La date de naissance n'est pas normale"; 
+					 }
 				 }
 			 }
 			 if(count($erreur)>0){
@@ -75,11 +87,21 @@
 					$req = $bdd->prepare('INSERT INTO utilisateurs (nom,prenom,email,tel,type,datenaissance,sexe,adresse) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
 					$req->execute(array($nom, $prenom, $email, $tel, $_POST['type'], $dateb, $sexe, $adresse));
 				}
-				$emailpat = $bdd->query("select id from utilisateurs where email='$email' and nom='$nom' and prenom='$prenom'");
-				$emailpat = $emailpat->fetchAll();
+				$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
+				$emailpati = $emailpat->fetchAll();
 				$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
-				$req->execute(array($emailpat[0]['id'], $_SESSION['userid']));
-				
+				$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
+				$msg[]="Le patient a bien été créé";
+				if(!empty($email)){
+					$to = $email;
+				    $subject = 'Bienvenue sur Allomedic';
+				    $message = '<p>Bonjour '.$prenom.' '.$nom.',</p>
+				    <p>Bienvenue sur la plateforme allomedic, vous avez été ajouté par le docteur '.$nommedic['nom'].'. Avant de vous permettre de prendre rendez-vous avec votre médecin, nous vous invitons a initialiser votre mot de passe en <a href="dekoh.eu/tfe/juin/nmp/'.md5($email).'">cliquant ici</a> </p>';
+				    $headers = 'From: noreply@allomedic.com' . "\r\n" .
+				     'MIME-Version: 1.0' . "\r\n" .
+				     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				     mail($to, $subject, $message, $headers);
+				}
 			}
 		}
 	}

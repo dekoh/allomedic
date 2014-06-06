@@ -4,7 +4,8 @@ $(document).ready(function(){
 		$("#navpro").slideToggle();
 	});
 	
-	$(".sectrdv").click(function(){
+	/*
+$(".sectrdv").click(function(){
 		
 		var idrdv = $(this).data("rdvid");
 		
@@ -12,6 +13,7 @@ $(document).ready(function(){
 		$("#rdvinfo"+idrdv).fadeToggle();
 				
 	});
+*/
 	$(".plage").click(function(){
 		if($(this).children(".modifmenu").hasClass("opened")){
 			$(this).children(".modifmenu").css("bottom","-50px");
@@ -29,13 +31,18 @@ $(document).ready(function(){
 	$(".closefeed").click(function(){
 		$(this).parent(".feedback").fadeOut();
 	});
+	$(".feedback").delay(3000).fadeOut("slow");
 	$(".md-trigger").click(function(){
 		var datadate = $(this).data("date");
+		var datahdeb = $(this).data("hdeb");
+		var datahfin = $(this).data("hfin");
+		var datajour = $(this).data("jour");
 		var dataheure = $(this).data("heure");
 		var datadateb = $(this).data("dateb");
 		var dataheureb = $(this).data("heureb");
 		var datanommed = $(this).data("nommed");
 		var dataidmed = $(this).data("idmed");
+		var dataid = $(this).data("id");
 		var dataduree = $(this).data("duree");
 		var datatype = $(this).data("type");
 		var datamin = $(this).data("min");
@@ -64,5 +71,12 @@ $(document).ready(function(){
 		$("#addrdv #selecttype").val(datatype).attr("selected", "selected");
 		$("#modrdv #selecttype").val(datatype).attr("selected", "selected");
 		$("#addrdv #outinputduree").val(datamin);
+		$("#modpla #selectjour").val(datajour).attr("selected", "selected");
+		$("#modpla #inputduree input").val(dataduree);
+		$("#modpla #utinputheure input").val(datahdeb);
+		$("#modpla #tinputheure input").val(datahfin);
+		$("#modpla #inputid").val(dataid);
+		$("#modpla #selecttype").val(datatype).attr("selected", "selected");
+		$("#suppla #inputid").val(dataid);
 	});
 });

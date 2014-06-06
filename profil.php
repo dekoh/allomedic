@@ -28,6 +28,9 @@ error_reporting(E_ALL);
 				include('php/modpro.ex.php');
 		?>
 	    <div id="container">
+	    	<?php
+		    	include('includes/feedback.inc.php');
+	    	?>
 	    	<div id="content">
 		    	
 				 <?php

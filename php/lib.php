@@ -1,13 +1,21 @@
 <?php
 	function validateDate($date)
 	{
-		list($dd,$mm,$yyyy) = explode('/',$date);
-		if (!checkdate($mm,$dd,$yyyy)) {
-		        $error = true;
+		/*
+$motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
+	 	if(preg_match($motif,$date)){
+			 $error = true; 
 		}
 		else{
-			$error = false;
-		}
+*/
+			list($dd,$mm,$yyyy) = explode('/',$date);
+			if (!checkdate($mm,$dd,$yyyy)) {
+			        $error = true;
+			}
+			else{
+				$error = false;
+			}
+		/* } */
 		/*
 
 	    preg_match('/(?<jour>\w+)/ (?<mois>\d+)/ (?<annee>\d+)/', $date, $matches);
@@ -18,18 +26,26 @@
 	}
 	function validateHeure($heure)
 	{
-		list($hh,$mm) = explode(':',$heure);
-		if ($hh<=24 && $hh>=0) {
-		    if ($mm<=59 && $mm>=0) {
-			    $error = false;
+		$motif = "#^[0-9]{1,2}+:[0-9]{2,}$#";
+	 	if(preg_match($motif,$heure)){
+			 $error = true; 
+		}
+		else{
+			list($hh,$mm) = explode(':',$heure);
+			if ($hh<=24 && $hh>=0) {
+			    if ($mm<=59 && $mm>=0) {
+				    $error = false;
+				}
+				else{
+					$error = true;
+				}
 			}
 			else{
 				$error = true;
-			}
+			} 
 		}
-		else{
-			$error = true;
-		}
+
+		
 		
 	    return $error;
 	}
@@ -76,18 +92,18 @@
 				$nomfer= $jourferie['nom'];
 			}
 		}
-		$conge = $bdd->query("select * from rdv where idmed=$id and type='cong'");
+		$conge = $bdd->query("select * from rdv where idmed=$id and type='cong' and annulation='0' ");
 		/* on vérifie les congés */
 		while($cong = $conge->fetch()){
 			if($datejour<$cong['date'] && $datelendemain>$cong['date']){
 				if($datejour<$cong['datefin'] && $datelendemain>$cong['datefin']){
 					echo '
-			<li data-rdvid="'.$cong['id'].'" class="'.$cong['type'].' sectrdv c1" style="top: '.top($cong['date'],$debutj).'px; height: '.height($cong['date'],$cong['datefin']).'px;">
+			<a href="rdv/'.$cong['id'].'"><li data-rdvid="'.$cong['id'].'" class="'.$cong['type'].' sectrdv t1" style="top: '.top($cong['date'],$debutj).'px; height: '.height($cong['date'],$cong['datefin']).'px;">
 				<div class="bloccl" style="height: '.(height($cong['date'],$cong['datefin'])+20).'px;"></div>
 				<span class="heure-rdv">'.date('H:i',$cong['date']).'</span>
 				<span class="patient-rdv">'.$cong['nompatient'].'</span>
-			
-			</li>
+				
+			</li></a>
 				<div id="rdvinfo'.$cong['id'].'" class="rdvinfo" style="top:'.(top($cong['date'],$debutj)+height($cong['date'],$cong['datefin'])).'px">motif: '.$cong['motif'].'</div>';
 				}
 				else{
@@ -305,8 +321,8 @@
 			<li class="plage '.$rdvd['type'].'" style="top: '.topp($rdvd['debut'],$debutj,1).'px; height: '.height(($rdvd['debut']*60),($rdvd['fin']*60),1).'px;">
 				<span class="heure-rdv">'.mintoh($rdvd['debut']).' - '.mintoh($rdvd['fin']).'</span>
 				<div class="modifmenu">
-					<button class="modifplage"><div>modif</div></button>
-					<button class="supplage"><div>sup</div></button>
+					<button class="modifplage md-trigger" data-modal="modpla" data-hdeb="'.mintoh($rdvd['debut']).'" data-hfin="'.mintoh($rdvd['fin']).'"  data-duree="'.$rdvd['duree'].'" data-type="'.$rdvd['type'].'" data-jour="'.$rdvd['jour'].'" data-id="'.$rdvd['id'].'"><div>modif</div></button>
+					<button class="supplage md-trigger" data-modal="suppla"  data-id="'.$rdvd['id'].'"><div>sup</div></button>
 				</div>
 			</li>';
 			$heightot = $heightot + height(($rdvd['debut']*60),($rdvd['fin']*60),1);

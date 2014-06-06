@@ -21,10 +21,13 @@ RewriteRule ^agenda-options/?$   options.php [L]
 
 RewriteRule ^agenda-jour/(.+)/?$   agenda-jour.php?url=$1 [L]
 
+RewriteRule ^agenda/(.+)/(.+)/?$   agenda.php?date=$1&msg=$2 [L]
 RewriteRule ^agenda/(.+)/?$   agenda.php?date=$1 [L]
 
 RewriteRule ^nouveau-rendez-vous/(.+)/(.+)/?$   nouveau-rendez-vous.php?url=$1&date=$2 [L]
 RewriteRule ^nouveau-rendez-vous/(.+)/?$   nouveau-rendez-vous.php?url=$1 [L]
+
+RewriteRule ^nmp/(.+)/?$   nmp.php?url=$1 [L]
 
 RewriteCond %{REQUEST_URI} ![\.]
 RewriteCond %{REQUEST_URI} !/tfe/?$

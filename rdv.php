@@ -54,6 +54,10 @@ error_reporting(E_ALL);
 		    		$heurerdv = date("H:i",$infordv[0]['date']);
 		    		$prof = $bdd->query("select * from utilisateurs where id=$idpro");
 		    		$profil = $prof -> fetchAll();
+		    		if(isset($profil[0])){
+		    		if(count($profil[0])>0){
+			    		
+		    		
 		    		$nompat = $profil[0]['nom']. " ".$profil[0]['prenom'];
 		    		if (file_exists("images/avatar/".$profil[0]['id'].".jpg")) {
 			    		$lienphoto = "images/avatar/".$profil[0]['id'].".jpg";
@@ -70,7 +74,11 @@ error_reporting(E_ALL);
 			    		}
 		    		}
 		    		$age = age($profil[0]['datenaissance']);
-		    		
+		    		}
+		    		}
+		    		else{
+			    		$lienphoto = "images/profilmen.jpg";
+		    		}
 				 ?>
 		    	
 		    	
@@ -78,6 +86,7 @@ error_reporting(E_ALL);
 		    		
 		    		<div class="col size-1">
 		    		<?php
+		    		if($infordv[0]['idmed']==$_SESSION['userid']){
 			    		if($idpro>0){
 		    		?>
 			    	<a href="profil/<?php echo $profil[0]['id'];?>"><div class="avatarprofil" style="width: 230px; height: 230px; background: url(<?php echo $lienphoto;?>) center no-repeat; background-size: cover;"></div></a>
@@ -121,8 +130,13 @@ error_reporting(E_ALL);
 						    	echo "<p>Ce rendez-vous est annulé pour les raisons suivantes: ".$infordv[0]['raison']."</p>";
 						    	echo "<div class='annulé'>Annulé</div>";
 					    	}
+					    	}
+					    	else{
+						    	echo "Ce rendez-vous ne vous est pas destiné!";
+					    	}
 				    	?>
 			    	</div>
+			    	
 			    	
 		    	</div>
 		    			    	

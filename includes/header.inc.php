@@ -3,6 +3,7 @@
 	    <div id="logo"><a href="f/..">Allomedic</a></div>
 	    <ul id="nav">
 	    	<?php
+	    	if(count($_SESSION)>0){
 		    	if($_SESSION['type']=='med'){
 	    	?>
 		    <li><a href="f/.." id="home">Accueil</a></li>
@@ -48,5 +49,8 @@
 	    	<li><a href="profil" id="profl">Profil</a></li>
 	    	<li><a href="php/connexion.ex.php" id="deco">Déconnexion</a></li>
 	    </ul>
+	    <?php
+		    }
+	    ?>
     </div>
 </header>

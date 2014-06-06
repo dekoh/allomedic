@@ -23,6 +23,8 @@ error_reporting(E_ALL);
     			$iduser = $_SESSION['userid'];
 				include('includes/header.inc.php');
 				
+					include('php/profil.ex.php');
+					
 			
 		?>
 	    <div id="container">
@@ -30,10 +32,7 @@ error_reporting(E_ALL);
 		    	include('includes/feedback.inc.php');
 	    	?>
 	    	<div id="content">
-		    	<?php
-					include('php/profil.ex.php');
-					
-						?>
+		    	
 				 
 		    	<button id="butadpat" class="md-trigger col pr-5" data-modal="addpat">Ajout d'un patient</button>
 		    	<form id="search" method="get" class="col pr-5" action="patients">

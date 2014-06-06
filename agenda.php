@@ -28,6 +28,9 @@ error_reporting(E_ALL);
 				include('php/rdv.ex.php');
 		?>
 	    <div id="container">
+	    	<?php
+		    	include('includes/feedback.inc.php');
+	    	?>
 	    	<div id="content">
 	    	<?php
 	    		$debutj= 510;

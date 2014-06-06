@@ -17,6 +17,7 @@
 			$motifdurdv = addslashes($_POST['motif']);
 			 $erreur = array();
 			 $avertissement = array();
+			 $msg = array();
 			 if(!empty($datedu)){
 			 	if(validateDate($datedu)){
 				 
@@ -92,6 +93,7 @@
 			
 		
 		}
+		
 		if($_POST['posttype']=="suprdv"){
 			$idrdv = $_POST['idrdv'];
 			$raison = $_POST['raison'];
