@@ -24,7 +24,37 @@ error_reporting(E_ALL);
     	<?php
     			if(isset($_SESSION['userid'])){
     			$iduser = $_SESSION['userid'];
+    			if(isset($_GET['url'])){
+			    			$idpro = $_GET['url'];
+		    			}
+		    			else{
+			    			$idpro = $iduser;
+		    			}
+		    	$prof = $bdd->query("select * from utilisateurs where id=$idpro");
+		    	$profil = $prof -> fetchAll();
 				include('includes/header.inc.php');
+				if($_SESSION['type']=="med" && $_SESSION['userid']!=$profil[0]['id']){
+						$idpat = $profil[0]['id'];
+						$idmed = $_SESSION['userid'];
+						$link = $bdd->query("SELECT * FROM liens WHERE idpat=$idpat and idmed=$idmed");
+						$nbl = $link->rowCount();
+						if($nbl>0){
+							$linkiok = true;
+							$modiok = true;
+						}
+					}
+					elseif($_SESSION['type']=="pat" && $_SESSION['userid']!=$profil[0]['id']){
+						$idpat = $_SESSION['userid'];
+						$idmed = $profil[0]['id'];
+						$link = $bdd->query("SELECT * FROM liens WHERE idpat=$idpat and idmed=$idmed");
+						$nbl = $link->rowCount();
+						if($nbl>0){
+							$linkiok = true;
+						}
+					}
+					elseif($_SESSION['userid']==$profil[0]['id']){
+						$modiok = true;
+					}
 				include('php/modpro.ex.php');
 		?>
 	    <div id="container">
@@ -34,14 +64,8 @@ error_reporting(E_ALL);
 	    	<div id="content">
 		    	
 				 <?php
-					 if(isset($_GET['url'])){
-			    			$idpro = $_GET['url'];
-		    			}
-		    			else{
-			    			$idpro = $iduser;
-		    			}
-		    		$prof = $bdd->query("select * from utilisateurs where id=$idpro");
-		    		$profil = $prof -> fetchAll();
+					
+		    		
 		    		if (file_exists("images/avatar/".$profil[0]['id'].".jpg")) {
 			    		$lienphoto = "images/avatar/".$profil[0]['id'].".jpg";
 		    		}
@@ -74,45 +98,51 @@ error_reporting(E_ALL);
 								else{
 									$adresse = $adre;
 								}
+					
+					if($_SESSION['userid']==$profil[0]['id'] || isset($linkiok)){
 				 ?>
 		    	
 		    	
 		    	<div class="blocpro">
 		    		
 		    		<div class="col size-1">
-			    	<div class="avatarprofil" style="width: 230px; height: 230px; background: url(<?php echo $lienphoto;?>) center no-repeat; background-size: cover;"><button class="modifphoto md-trigger" data-modal="modifphoto">modifier</button></div>
+			    	<div class="avatarprofil" style="width: 230px; height: 230px; background: url(<?php echo $lienphoto;?>) center no-repeat; background-size: cover;"><?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<button class="modifphoto md-trigger" data-modal="modifphoto">modifier</button>';}?></div>
 			    	<?php 
-			    		if($profil[0]['id']!=$_SESSION['userid']){
+			    		if($profil[0]['id']!=$_SESSION['userid']||$_SESSION['type']=="med"){
 				    	
 			    	?>
-			    	<button  class="md-trigger alert expand" data-modal="suppat">Supprimer le patient</button>
+			    	<?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<button  class="md-trigger alert expand" data-modal="suppat">Supprimer le patient</button>';}?>
 			    	<?php
 			    		}
 			    	?>
 		    		</div>
-			    	<h2 class="col size-2"><?php echo $profil[0]['nom']. " ".$profil[0]['prenom'];?><span class="modifbout md-trigger" data-modal="modifnom" data-nom="<?php echo $profil[0]['nom'];?>" data-prenom="<?php echo $profil[0]['prenom'];?>">Modifier</span></h2>
+			    	<h2 class="col size-2"><?php echo $profil[0]['nom']. " ".$profil[0]['prenom'];?><?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modifnom" data-nom="'.$profil[0]['nom'].'" data-prenom="'.$profil[0]['prenom'].'">Modifier</span>';}?></h2>
 			    	<div  class="col size-1">
 				    	<h3>Coordonnées</h3>
-				    	<h4>Adresse email:<span class="modifbout md-trigger" data-modal="modifemail" data-email="<?php echo $profil[0]['email'];?>">Modifier</span></h4>
+				    	<h4>Adresse email:<?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modifemail" data-email="'.$profil[0]['email'].'">Modifier</span>';}?></h4>
 				    	<p><a href="mailto:<?php echo $profil[0]['email'];?>"><?php echo $profil[0]['email'];?></a></p>
-				    	<h4>Numéro de téléphone: <span class="modifbout md-trigger" data-modal="modiftel" data-tel="<?php echo $profil[0]['tel'];?>">Modifier</span> </h4>
+				    	<h4>Numéro de téléphone: <?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modiftel" data-tel="'.$profil[0]['tel'].'">Modifier</span>';}?> </h4>
 				    	<p><a href="sip:<?php echo $profil[0]['tel'];?>"><?php echo $tel;?></a></p>
-				    	<h4>Adresse postale: <span class="modifbout md-trigger" data-modal="modifadr" data-adr="<?php echo $profil[0]['adresse'];?>">Modifier</span> </h4>
+				    	<h4>Adresse postale: <?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modifadr" data-adr="'.$profil[0]['adresse'].'">Modifier</span>';}?> </h4>
 				    	<p><a href="geo:<?php echo $profil[0]['adresse'];?>"><?php echo $adresse;?></a></p>
 			    	</div>
 			    	<div  class="col size-1">
 				    	<h3>Infos</h3>
-				    	<h4>Sexe:<span class="modifbout md-trigger" data-modal="modifsexe" data-sexe="<?php echo $profil[0]['sexe']; ?>">Modifier</span></h4>
+				    	<h4>Sexe:<?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modifsexe" data-sexe="'.$profil[0]['sexe'].'">Modifier</span>';}?></h4>
 				    	<p><?php echo $sexe;?></p>
-				    	<h4>Date de naissance:<span class="modifbout md-trigger" data-modal="modifdatenaissance" data-dn="<?php echo $profil[0]['datenaissance'];?>">Modifier</span></h4>
+				    	<h4>Date de naissance:<?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modifdatenaissance" data-dn="'.$profil[0]['datenaissance'].'">Modifier</span>';}?></h4>
 				    	<p><?php echo $profil[0]['datenaissance'].' ('.age($profil[0]['datenaissance']).'ans)';?></p>
 			    	</div>
 		    	</div>
-		    			    	
+		    			 <?php
+			    			 }
+			    			 else{
+				    			 echo "Vous n'etes pas autorisé à voir ce profil.";
+			    			 }
+		    			 ?>   	
 	    	</div>
 	    </div>
 	    <?php
-	    	echo $idpro;
 		    include('includes/modal.inc.php');	
 		?>
 	    <script>

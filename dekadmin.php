@@ -83,7 +83,7 @@ error_reporting(E_ALL);
 			?>
 			<div id="formcon">
 			<form action="dekadmin" class="con" method="post">
-				<h1>Connexioné</h1>
+				<h1>Connexion</h1>
 		<p>
 	      <!-- <label for="login">Pseudo:</label> -->
 	      <input type="text" name="login" id="email" placeholder="pseudo">

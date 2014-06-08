@@ -1,10 +1,10 @@
 
 <div id="formcon">
-<form action="php/connexion.ex.php" class="con" method="post">        
+<form action="f/.." class="con" method="post">        
        <h1>Connexion</h1>
 		<p>
 	      <!-- <label for="login">Pseudo:</label> -->
-	      <input type="text" name="email" id="email" placeholder="eMail">
+	      <input type="text" name="email" id="email" placeholder="eMail" <?php if(isset($_POST['email'])){echo "value='".$_POST['email']."'";}?>>
 	    </p>
 	
 	    <p>
@@ -18,6 +18,6 @@
 	    <p class="login-submit">
 	      <button type="submit" class="login-button expand">Connexion</button>
 	    </p>
-	    <p><a href="motdepasse">Vous avez oublié votre mot de passe?</a></p>
+	    <p><a href="nmp/lostmdp">Vous avez oublié votre mot de passe?</a></p>
     </form>
 </div>

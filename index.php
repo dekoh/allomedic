@@ -13,6 +13,7 @@ error_reporting(E_ALL);
 
   		<?php
 			include('includes/metahead.inc.php');
+		    include('php/connexion.ex.php');
 		?>
     </head>
    

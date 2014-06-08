@@ -17,7 +17,8 @@
 			 $erreur = array();
 			 $msg = array();
 			 $avertissement = array();
-			 $sel = $bdd->query("SELECT * FROM utilisateurs WHERE id=$_SESSION['userid']");
+			 $idu = $_SESSION['userid'];
+			 $sel = $bdd->query("SELECT * FROM utilisateurs WHERE id=$idu");
 			 $nommedic = $sel->fetchAll();
 			 if(!empty($prenom)){
 				 if(preg_match($motif,$prenom)){
@@ -86,21 +87,41 @@
 			 	if(!isset($makelink)){
 					$req = $bdd->prepare('INSERT INTO utilisateurs (nom,prenom,email,tel,type,datenaissance,sexe,adresse) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
 					$req->execute(array($nom, $prenom, $email, $tel, $_POST['type'], $dateb, $sexe, $adresse));
+					
+					$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
+					$emailpati = $emailpat->fetchAll();
+					$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
+					$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
+					$msg[]="Le patient a bien été créé";
+					if(!empty($email)){
+						$to = $email;
+						$subject = 'Docteur '.$nommedic[0]['nom'].' vous a ajouté a ses patients';
+					    $message = '<p>Bonjour '.$prenom.' '.$nom.',</p>
+					    <p>Le docteur '.$nommedic[0]['nom'].' vous a bien ajouté à ses patients, vous pouvez désormais prendre rendez-vous avec ce médecin.</p>';
+					    
+					    $headers = 'From: \"Allomedic\"<noreply@allomedic.com>' . "\r\n" .
+					     'MIME-Version: 1.0' . "\r\n" .
+					     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					     mail($to, $subject, $message, $headers);
+					}
 				}
-				$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
-				$emailpati = $emailpat->fetchAll();
-				$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
-				$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
-				$msg[]="Le patient a bien été créé";
-				if(!empty($email)){
-					$to = $email;
-				    $subject = 'Bienvenue sur Allomedic';
-				    $message = '<p>Bonjour '.$prenom.' '.$nom.',</p>
-				    <p>Bienvenue sur la plateforme allomedic, vous avez été ajouté par le docteur '.$nommedic['nom'].'. Avant de vous permettre de prendre rendez-vous avec votre médecin, nous vous invitons a initialiser votre mot de passe en <a href="dekoh.eu/tfe/juin/nmp/'.md5($email).'">cliquant ici</a> </p>';
-				    $headers = 'From: noreply@allomedic.com' . "\r\n" .
-				     'MIME-Version: 1.0' . "\r\n" .
-				     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-				     mail($to, $subject, $message, $headers);
+				else{
+					$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
+					$emailpati = $emailpat->fetchAll();
+					$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
+					$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
+					$msg[]="Le patient a bien été créé";
+					if(!empty($email)){
+						$to = $email;
+					    $subject = 'Bienvenue sur Allomedic';
+					    $message = '<p>Bonjour '.$prenom.' '.$nom.',</p>
+					    <p>Bienvenue sur la plateforme allomedic, vous avez été ajouté par le docteur '.$nommedic[0]['nom'].'. Avant de vous permettre de prendre rendez-vous avec votre médecin, nous vous invitons a initialiser votre mot de passe en <a href="dekoh.eu/tfe/juin/nmp/'.md5("smp".$email).'">cliquant ici</a> </p>';
+					    $headers = 'From: \"Allomedic\"<noreply@allomedic.com>' . "\r\n" .
+					     'MIME-Version: 1.0' . "\r\n" .
+					     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					     mail($to, $subject, $message, $headers);
+					}
+
 				}
 			}
 		}

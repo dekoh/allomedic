@@ -47,7 +47,7 @@
 	    </div>
 	    <ul id="navpro">
 	    	<li><a href="profil" id="profl">Profil</a></li>
-	    	<li><a href="php/connexion.ex.php" id="deco">Déconnexion</a></li>
+	    	<li><a href="f/..?deco=d" id="deco">Déconnexion</a></li>
 	    </ul>
 	    <?php
 		    }
