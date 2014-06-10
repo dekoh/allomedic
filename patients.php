@@ -105,39 +105,19 @@ error_reporting(E_ALL);
 									
 									$idpatient = $idpat['idpat'];
 									
-										$patient = $bdd->query("select * from utilisateurs where id=$idpatient");
+									$patienti = $bdd->query("select * from utilisateurs where id=$idpatient");
 									
-									$patient = $patient -> fetchAll(PDO::FETCH_ASSOC);
+									$patient = $patienti->fetchAll();
 									
 									$adre = stripslashes($patient[0]['adresse']);
-									/*
-	preg_match("/^([\d\/-]+?[\h]?(bis|ter)?)[\h]*([\D]{3}.*),[\h]*([\d]{5})[\h]*(.*)$/i", $adre, $aatch);
 									
-	*/
-									/*
-	preg_match("'(?<rue>[[:alnum:] -]*).(?<cp>[0-9]{5}).(?<ville>[[:alnum:] -]*)'", $adre, $aatch);
-									echo "<pre>";
-									print_r($aatch);
-									echo "</pre>";
-									$numeroad = $aatch['rue'];
-									$voiead = $aatch['rue'];
-									$code_postalad = $aatch['cp'];
-									$villead = $aatch['ville'];
-	*/
 									if(preg_match("'(.*)([0-9]{5})(.*)'s" ,$adre,$out)){
 										$adresse = $out[1] . '</br>' . $out[2]. ' '. $out[3];
 									}
 									else{
 										$adresse = $adre;
 									}
-									
-	 /*
-	
-	echo 'adresse complète : '.$out[0].'<br>';
-	echo 'rue : ' . $out[1] . '<br />';
-	echo 'code postal : ' . $out[2] . '<br />';
-	echo 'ville : ' . $out[3] . '<br /><br />';		
-	*/						
+							
 									echo '<tr><td class="user-avatar"><a href="profil/'.$patient[0]['id'].'" class="'.$patient[0]['sexe'].'"';
 									
 									if (file_exists("images/avatar/".$patient[0]['id'].".jpg")) {
@@ -152,15 +132,7 @@ error_reporting(E_ALL);
 							}
 															
 						?>
-					<!--
-
 					
-						<tr><td class="user-avatar"><a href="patients/1" class="m" style="background: url(images/avatar/5.jpg) no-repeat; background-size: cover;">av</a></td><td class="user-name"><a href="patients/1">gary coleman</a></td><td class="user-age">20/03/1983 (31ans)</td><td class="user-email">gary.coleman21@example.com</td><td class="user-phone">0698876734</td><td class="user-adress">Apple street, 23<br>23000 Bigapple</td></tr>
-						<tr><td class="user-avatar"><a href="patients/1">av</a></td><td class="user-name">gary coleman</td><td class="user-age">20/03/1983 (31ans)</td><td class="user-email">gary.coleman21@example.com</td><td class="user-phone">0698876734</td><td class="user-adress">Apple street, 23<br>23000 Bigapple</td></tr>
-						<tr><td class="user-avatar"><a href="patients/1" class="m">av</a></td><td class="user-name"><a href="patients/1">gary coleman</a></td><td class="user-age">20/03/1983 (31ans)</td><td class="user-email">gary.coleman21@example.com</td><td class="user-phone">0698876734</td><td class="user-adress">Apple street, 23<br>23000 Bigapple</td></tr>
-						<tr><td class="user-avatar"><a href="patients/1" class="f">av</a></td><td class="user-name">gary coleman</td><td class="user-age">20/03/1983 (31ans)</td><td class="user-email">gary.coleman21@example.com</td><td class="user-phone">0698876734</td><td class="user-adress">Apple street, 23<br>23000 Bigapple</td></tr>
--->
-
 					</tbody>
 				</table>
 		    	
@@ -173,13 +145,7 @@ error_reporting(E_ALL);
 		    $(document).ready(function(){
 				$("header #nav li a").removeClass('active');
 				$("header #nav li a#patients").addClass('active');
-				/*
- $("#tablepatient").tablesorter({dateFormat: 'ddmmyyyy',headers: { 
-                2: { 
-                    sorter:'shortDate' 
-                } 
-            } });
-*/
+				
 				 $("#tablepatient")
 				 
 				 	.tablesorter({
@@ -191,10 +157,7 @@ error_reporting(E_ALL);
 				 
 			});
 	    </script>
-	    <!--
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-	    <script src="js/jquery.stickyheader.js"></script>
--->
+	    
     </body>
 </html>
 <?php

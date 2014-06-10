@@ -74,7 +74,7 @@ $setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répe
 			    		?>
 				    	<!-- <li><span class="date">18/05/2014 à 12h30</span> - <a href="profil/1" class="nommedic">Dr. Cabrol</a> - <span class="lieu">au cabinet</span></li> -->
 			    	</ul>
-			    	<a href="" class="button expand">Ajouter un rendez-vous</a>
+			    	<a href="nouveau-rendez-vous" class="button expand">Ajouter un rendez-vous</a>
 
 		    	</div>
 	    	</div>

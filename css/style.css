@@ -2,6 +2,11 @@ body{
 	background: #e9f0f4;
 	font-family: 'Open Sans', sans-serif;
 }
+.lien{
+	color: #4697ed;
+	font-size: .9em;
+	cursor: pointer;
+}
 /* header */
 header{
 	width: 100%;
@@ -227,6 +232,24 @@ header #nav li a#patients:before{
 	font-size: 1.8em;
 	font-weight: bold;
 	color: #545454;
+}
+.bientot li{
+	opacity: .3;
+	}
+.bientot{
+	-webkit-transform: scale(0.9);
+}
+.bientot:after{
+	content: 'Bientôt...';
+	position: absolute;
+	top: 170px;
+	width: 100%;
+	text-align: center;
+	font-size: 1.3em;
+	color: #ffffff;
+	opacity: 1;
+	background: #008dcd;
+	padding: 10px;
 }
 button, .button{
 	background: #008dcd;
@@ -783,6 +806,7 @@ td.user-name {
 	display: block;
 	overflow: hidden;
 	cursor: pointer;
+	padding: 0 0px 0 14px;
 }
 
 #tableagenda.forpatient tbody tr td ul li{
@@ -803,6 +827,8 @@ td.user-name {
 	position: absolute;
 	width: 8px;
 	height: 225px;
+	top: 0;
+	left: 0;
 	margin-left: -2px;
 	background: #ffc400;
 }
@@ -838,7 +864,6 @@ td.user-name {
 }
 #tableagenda tbody tr td ul li .heure-rdv{
 	font-size: .64em;
-	margin-left: 14px;
 	min-width: 24px;
 	display: inline-block;
 }
@@ -937,6 +962,12 @@ td.user-name {
 /* Agenda jour */
 .sidebar{
 	width: 25%;
+}
+.clrdvj{
+	text-align: center;
+	color: #dadada;
+	width: 100%;
+	display: block;
 }
 #petitagenda td{
 	color: #008dcd;
@@ -1197,6 +1228,17 @@ cursor: pointer;
 	-ms-transform: rotate(-20deg);
 	-webkit-transform: rotate(-20deg);
 }
+/* contact */
+.bc{
+	width: 50%;
+	margin: 0 auto;
+}
+#logo.cente{
+	margin: 20px auto -20px;
+	width: 200px;
+	float: none;
+	height: 60px;
+}
 /* mediaqueries */
 
 @media all and (max-width: 1028px) {
@@ -1328,7 +1370,9 @@ margin-bottom: 20px;
 	#tableagenda thead tr th small{
 		display: block;
 	}
-	
+	#logo a{
+		width: 200px;
+	}
 	.annulé{
 		top: 525px;
 		font-size: 8em;
@@ -1357,21 +1401,37 @@ margin-bottom: 20px;
 		display: none;
 	}
 }
+@media all and (max-width: 540px) {
+	#logo a{
+		width: 100px;
+	background: url(../images/logo2.png) left 20px no-repeat;
+	background-size: 100px;
+	padding: 20px 0;
+	}
+}
 @media all and (max-width: 450px) {
 	.pr-25.col{
 		width: 100%;
+	}
+	#profil{		
+		padding: 7px 0px;
 	}
 	.annulé{
 		top: 625px;
 		font-size: 5em;
 		left: 3%;
 	}
+	#logo a{
+		width: 70px;
+		background: url(../images/logo2.png) left 20px no-repeat;
+		background-size: 70px;
+	}
+	header #nav li a {
+		width: 50px;
+		padding: 4px 6px;
+	}
 	#formcon{
 		padding: 10% 0;
-	}
-	#logo a{
-		padding-left: 48px;
-		background-size: 70px;
 	}
 	.md-content button.md-submit {
 		padding: 16px;
@@ -1379,9 +1439,6 @@ margin-bottom: 20px;
 	
 	.hadr, .user-adress{
 		display: none;
-	}
-	header #nav li a {
-		width: 60px;
 	}
 	header #nav li a#home:before {
 		width: 40px;
@@ -1409,11 +1466,11 @@ margin-bottom: 20px;
 		font-size: .6em;
 	}
 	#tableagenda tbody tr td ul li .heure-rdv {
-		margin-left: 6px;
+		margin-left: -2px;
 	}
 	#menuagenda li a {
 		padding: 10px 4px;
-		font-size: .9em;
+		font-size: .7em;
 	}
 	#menuagenda{
 		margin: 0;

@@ -33,8 +33,6 @@ error_reporting(E_ALL);
 	    	?>
 	    	<div id="content">
 	    	<?php
-	    		$debutj= 510;
-	    		$finj= 1020;
 	    		if(isset($_GET['date'])){
 		    		$dateauj = explode("/",date("d/m/Y", intval($_GET['date'])));
 		    		$tmstp = intval($_GET['date']);
@@ -111,6 +109,57 @@ error_reporting(E_ALL);
 	    			$datesat=$tmstp + (6*86400);
 	    			$datesun=$tmstp + (7*86400);
 	    		}
+	    		/* calcule du début de journée */
+	    		
+	    		$deb = $bdd->query("SELECT * FROM plages WHERE idmed=$iduser");
+	    		$ndeb = $deb->rowCount();
+	    		if($ndeb==0){			    		
+		    		$debutj= 510;
+		    		$finj= 1020;
+	    		}
+	    		while($debu = $deb->fetch()){
+	    			if(isset($debutj)){
+			    		if($debu['debut']<$debutj){
+				    		$debutj = $debu['debut'];
+			    		}
+		    		}
+		    		else{
+			    		$debutj = $debu['debut'];
+		    		}
+		    		if(isset($finj)){
+			    		if($debu['fin']>$finj){
+				    		$finj = $debu['fin'];
+			    		}
+		    		}
+		    		else{
+			    		$finj = $debu['fin'];
+		    		}
+	    		}
+	    		$dat = $bdd->query("SELECT * FROM rdv WHERE idmed=$iduser and date between $datemon and $datesun");
+	    		
+	    		while($date = $dat->fetch()){
+	    			$datej = tmsptom($date['date']);
+	    			$datefj = tmsptom($date['datefin']);
+	    			if(isset($debutj)){
+			    		if($datej<$debutj){
+				    		$debutj = $datej;
+			    		}
+		    		}
+		    		else{
+			    		$debutj = $datej;
+		    		}
+		    		if(isset($finj)){
+			    		if($datefj>$finj){
+				    		$finj = $datefj;
+			    		}
+		    		}
+		    		else{
+			    		$finj = $datefj;
+		    		}
+	    		}
+
+	    		
+	    		
 	    		$datemonday = date("d/m/Y", $datemon);
 	    		$datetuesday = date("d/m/Y", $datetue);
 	    		$datewednesday = date("d/m/Y", $datewed);

@@ -44,7 +44,11 @@ error_reporting(E_ALL);
 			    		$idpat = $rdva['idpat'];
 			    		$infopat = $bdd->query("SELECT * FROM utilisateurs WHERE id=$idpat");
 			    		$pat = $infopat->fetchAll();
-			    		$datepat = $pat[0]['datenaissance'];
+			    		$npat = $infopat->rowCount();
+			    		if($npat>0){
+				    		$datepat = $pat[0]['datenaissance'];
+			    		}
+			    		
 			    		if($rdva['lu']==1){
 				    		$lu = "lu";
 			    		}
@@ -59,8 +63,12 @@ error_reporting(E_ALL);
 		    	</div>
 		    	
 		    	<div class="quipq col">
-			    	<span class="nomdupat"><a href="profil/'.$idpat.'">'.$rdva['nompatient'].'</a>, '.age($datepat).'ans</span>
-			    	<span class="motifdupat">  > '.$rdva['motif'].'</span>
+			    	<span class="nomdupat"><a href="profil/'.$idpat.'">'.$rdva['nompatient'].'</a>';
+			    	if($npat>0){
+			    		echo ', '.age($datepat).'ans';
+			    	}
+			    	echo '</span>
+			    	<span class="motifdupat">  > '.$rdva['motif'].'</span><span class="motifdupat">  > '.$rdva['raison'].'</span>
 		    	</div></a></div>';
 		    		$idrdv = $rdva['id'];
 	   	    		$req = $bdd->query("UPDATE rdv SET lu=1 WHERE id=$idrdv");

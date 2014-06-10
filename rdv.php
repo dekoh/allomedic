@@ -77,6 +77,7 @@ error_reporting(E_ALL);
 		    		}
 		    		}
 		    		else{
+		    			$nompat = $infordv[0]['nompatient'];
 			    		$lienphoto = "images/profilmen.jpg";
 		    		}
 				 ?>
@@ -86,7 +87,7 @@ error_reporting(E_ALL);
 		    		
 		    		<div class="col size-1">
 		    		<?php
-		    		if($infordv[0]['idmed']==$_SESSION['userid']){
+		    		if($infordv[0]['idmed']==$_SESSION['userid']||$infordv[0]['idpat']==$_SESSION['userid']){
 			    		if($idpro>0){
 		    		?>
 			    	<a href="profil/<?php echo $profil[0]['id'];?>"><div class="avatarprofil" style="width: 230px; height: 230px; background: url(<?php echo $lienphoto;?>) center no-repeat; background-size: cover;"></div></a>
@@ -114,7 +115,11 @@ error_reporting(E_ALL);
 			    	?>
 			    	<div  class="col size-2">
 			    		<p>Le <?php echo $jourrdv." ".$daterdv;?> à <?php echo $heurerdv;?></p>
-			    		<p>Rendez-vous <?php echo $typederdv; ?>  </p>
+			    		<?php
+				    		if(!empty($typederdv)){
+					    		echo "<p>Rendez-vous $typederdv </p>";
+				    		}
+			    		?>
 			    		<p>Durée du rendez-vous: <?php echo $dureerdv." minutes"; ?></p>
 				    	<p>Motif: <?php echo $motifrdv;?></p>
 				    	

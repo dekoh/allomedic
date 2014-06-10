@@ -268,7 +268,7 @@
 						<div>
 							<form action="patients" method="post">
 								<div id="champprenom" class="col pr-5">
-									<input type="text" name="prenom" placeholder="Prénom*"<?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['prenom'])){echo "value='".$_POST['prenom']."'";}} }?>/>
+									<input type="text" id="inputprenom" name="prenom" placeholder="Prénom*"<?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['prenom'])){echo "value='".$_POST['prenom']."'";}} }?>/>
 									<?php
 										if(isset($erreur['prenom'])){
 											echo '<script>$("#champprenom").addClass("champ-erreur");</script>';
@@ -282,7 +282,7 @@
 									?>
 								</div>
 								<div id="champnom" class="col pr-5">
-									<input type="text" name="nom" placeholder="Nom*" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['nom'])){echo "value='".$_POST['nom']."'";}} }?>/>
+									<input type="text" id="inputnom" name="nom" placeholder="Nom*" <?php if(isset($erreur)){if(count($erreur)>0){if(isset($_POST['nom'])){echo "value='".$_POST['nom']."'";}} }?>/>
 									<?php
 										if(isset($erreur['nom'])){
 											echo '<script>$("#champnom").addClass("champ-erreur");</script>';
@@ -517,7 +517,7 @@
 											echo '<small class="error">La durée est anormalement élevée... </small>';
 										}
 									?></div>
-								<input type="text" id="idinputpatient"  name="patient" placeholder="Nom et prénom du patient" value="<?php echo $nompat; ?>"/>
+								<input type="text" id="idinputpatient"  name="patient" placeholder="Nom et prénom du patient" <?php if(!empty($nompat)){echo "value='$nompat'";}?>/>
 								<input type="text"  name="motif" placeholder="Motif" value="<?php echo $motifrdv; ?>"/>
 								<input type="hidden" id="inputidmed" name="idmed" value="<?php if($_SESSION['type']=="med"){echo $_SESSION['userid'];} ?>"/>
 								<input type="hidden" id="inputidrdv" name="idrdv" value="<?php echo $idrdv; ?>"/>

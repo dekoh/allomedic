@@ -37,8 +37,9 @@
 	  <li class="bullet-item">Gestion des patients</li>
 	  <li class="bullet-item">Gestion des Rendez-vous</li>
 	  <li class="bullet-item">Agenda et planning personnalisable</li>
+	  <li class="cta-button"><a class="button" href="contact">Souscrire</a></li>
 	</ul>
-	<ul class="pricing-table col pr-25">
+	<ul class="pricing-table col pr-25 bientot">
 	  <li class="title">Medium</li>
 	  <li class="price">39€/mois</li>
 	  <li class="description">Offre de base</li>
@@ -48,7 +49,7 @@
 	  <li class="bullet-item">Sous domaine</li>
 	  <li class="bullet-item">Page personalisable</li>
 	</ul>
-	<ul class="pricing-table col pr-25">
+	<ul class="pricing-table col pr-25 bientot">
 	  <li class="title">Gold</li>
 	  <li class="price">59€/mois</li>
 	  <li class="description">Offre ultra personnalisé</li>
@@ -62,7 +63,7 @@
 	  <li class="title">Perso</li>
 	  <li class="price">Devis</li>
 	  <li class="description">Demandez votre devis gratuit pour une offre ajusté à vos besoins.</li>
-	    <li class="cta-button"><a class="button" href="#">Demande de devis</a></li>
+	    <li class="cta-button"><a class="button" href="contact">Demande de devis</a></li>
 
 	</ul>
 </div>

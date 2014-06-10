@@ -78,7 +78,7 @@
 				if(!isset($patientid)){
 					$patientid = 0;
 					if($typerdv!="autre"){
-						$avertissement['patient'] = "Cette personne ne fait pas partie de votre liste de patient.";
+						/* $avertissement['patient'] = true; */
 					}
 					
 				}
@@ -86,19 +86,28 @@
 			}
 			$req = $bdd->prepare('INSERT INTO rdv (idmed, idpat, date, datefin, type, motif, nompatient) VALUES(?, ?, ?, ?, ?, ?, ?)');
 			$req->execute(array($idmed, $patientid, $daterdv, $daterdvfin, $typerdv, $motifrdv, $nompatient));
-			if(isset($avertissement['patient'])){
-				?>
+			if(isset($patientid)){
+				if($patientid==0 && $typerdv!="autre"){
+					echo '
+					<script LANGUAGE="JavaScript">
+						document.location.href="agenda/'.$daterdv.'/donemp+'.$nompatient.'";
+					</script>
+					';
+				}
+				else{
+			echo '
 			<script LANGUAGE="JavaScript">
-				document.location.href="agenda/<?php echo $daterdv; ?>/donemp";
+				document.location.href="agenda/'.$daterdv.'/done";
 			</script>
-			<?php
+			';
+			}
 			}
 			else{
-			?>
+			echo '
 			<script LANGUAGE="JavaScript">
-				document.location.href="agenda/<?php echo $daterdv; ?>/done";
+				document.location.href="agenda/'.$daterdv.'/done";
 			</script>
-			<?php
+			';
 			}
 			}
 		}

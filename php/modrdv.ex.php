@@ -28,7 +28,7 @@
 				 $erreur['date'][1] = "La date n'est pas rempli";
 			 }
 			 if(!empty($heuredu)){
-			 	if(validateHeure($heuredu)){
+			 	if(!validateHeure($heuredu)){
 				 
 					 $erreur['heure'][0] = "L'heure n'est pas valide"; 
 				 }

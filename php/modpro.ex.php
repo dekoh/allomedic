@@ -64,7 +64,7 @@
 						
 					}
 					elseif($_SESSION['type']=="pat"){
-						$alert[]="Il y a un soucis avec cet email, si le problème persiste n'hésitez pas a contacter l'assistance";
+						$alert[]="Il y a un soucis avec cet email, si le problème persiste n'hésitez pas a contacter <a href='contact'>l'assistance</a>";
 					}
 				}
 			 }
@@ -96,14 +96,14 @@
 		}
 		if($_POST['posttype']=="modifadr"){
 			$idpat = $_POST['idpat'];
-			$adr = $_POST['adresse'];
+			$adr = addslashes($_POST['adresse']);
 			if(!isset($modiok)){
 				 $alert[] = "Vous n'avez pas les droits pour modifier ce profil!";
 			}
 			else{
 				$req = $bdd->prepare("UPDATE utilisateurs SET adresse='$adr' WHERE id='$idpat'");
 				$req->execute();
-				$msg[]="L'adresse a bien été modifié";
+				$msg[]="L'adresse a bien été modifiée";
 			}
 		}
 		if($_POST['posttype']=="modifsexe"){
@@ -129,7 +129,7 @@
 			else{
 				$req = $bdd->prepare("UPDATE utilisateurs SET datenaissance='$date' WHERE id='$idpat'");
 				$req->execute();
-				$msg[]="La date de naissance a bien été modifié";
+				$msg[]="La date de naissance a bien été modifiée";
 			}
 		}
 		if($_POST['posttype']=="suppat"){

@@ -132,63 +132,67 @@ $motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
 			
 			$heightot = $heightot + height($rdvd['date'],$rdvd['datefin']);
 		}
-		if($fer!=true){						
-		$plage = $bdd->query("select * from plages where idmed=$id and jour='$jour'");
-		while($pla = $plage->fetch()){
-			$debut = $pla['debut'];
-			$debut = $debut*60;
-			$debut = $debut + $datejour;
-			$fin = $pla['fin'];
-			$fin = $fin*60;
-			$fin = $fin + $datejour;
-			$premd = $debut;
-			$rdvtj = $bdd->query("select * from rdv where idmed=$id and annulation=0 and datefin between $datejour and $datelendemain");
-			
-			$derd = $debut;
-			/* On vérifie si il y a un rendez-vous qui commence avant la plage horraire et qui se termine dans la plage horraire	*/
-			while($rdvt = $rdvtj->fetch()){
-				if($rdvt['datefin']>$debut&&$rdvt['date']<=$debut){
-					$derdd = $rdvt['datefin'];
-				}
-			}
-			
-			$rdv = $bdd->query("select * from rdv where idmed=$id and annulation=0 and date between $debut and $fin order by date ");
-			$count = $rdv->rowCount();						
-			/* création des plages libres */
-			while($rdvj = $rdv->fetch()){
-				/* On vérifie ou est le rendez-vous, on calcule ensuite les endroits ou on doit placer les plages libres. */			
-				if($rdvj['date']>$premd){
-					$debutad = $premd;
-					$finad = $rdvj['date'];
-					echo '<li class="md-trigger plagelibre test2" data-modal="addrdv" data-date="'.date("d/m/Y",$debutad).'" data-heure="'.date("H:i",$debutad).'" data-type="'.$pla['type'].'" data-min="'.$pla['duree'].'" style="top: '.top($debutad,$debutj).'px; height: '.height($debutad, $finad).'px;"><span>+ajouter</span></li>';
-					$heightot = $heightot + height($debutad, $finad);
-				}
-				$premd = $rdvj['datefin'];
-				if($rdvj['datefin']>$derd){
-					$derd = $rdvj['datefin'];
-				}
-											
-			}
-			/* On complete si il y a de la place libre a la fin de la plage horraire */
-			
-			if($derd<$fin){
-				if(isset($derdd)&&$derdd>$derd){
+		if($datelendemain>time()){
+			if($fer!=true){						
+				$plage = $bdd->query("select * from plages where idmed=$id and jour='$jour'");
+				while($pla = $plage->fetch()){
+					$debut = $pla['debut'];
+					$debut = $debut*60;
+					$debut = $debut + $datejour;
+					$fin = $pla['fin'];
+					$fin = $fin*60;
+					$fin = $fin + $datejour;
+					$premd = $debut;
+					$rdvtj = $bdd->query("select * from rdv where idmed=$id and annulation=0 and datefin between $datejour and $datelendemain");
+					$derd = $debut;
+					/* On vérifie si il y a un rendez-vous qui commence avant la plage horraire et qui se termine dans la plage horraire	*/
+					while($rdvt = $rdvtj->fetch()){
+						if($rdvt['datefin']>$debut && $rdvt['date']<=$debut){
+							$derdd = $rdvt['datefin'];
+							
+						}
+					}
 					
-						$debutad = $derdd;
+					$rdv = $bdd->query("select * from rdv where idmed=$id and annulation=0 and date between $debut and $fin order by date ");
+					$count = $rdv->rowCount();						
+					/* création des plages libres */
+					while($rdvj = $rdv->fetch()){
+						/* On vérifie ou est le rendez-vous, on calcule ensuite les endroits ou on doit placer les plages libres. */			
+						if($rdvj['date']>$premd){/* si le debut du rdv est plus grand que le debut de la plage */
+							$debutad = $premd;
+							$finad = $rdvj['date'];
+							echo '<li class="md-trigger plagelibre test2" data-modal="addrdv" data-date="'.date("d/m/Y",$debutad).'" data-heure="'.date("H:i",$debutad).'" data-type="'.$pla['type'].'" data-min="'.$pla['duree'].'" style="top: '.top($debutad,$debutj).'px; height: '.height($debutad, $finad).'px;"><span>+ajouter</span></li>';
+							$heightot = $heightot + height($debutad, $finad);
+						}
+						$premd = $rdvj['datefin'];
+						if($rdvj['datefin']>$derd){/* si la fin du rdv est plus grand que la fin de la plage */
+							$derd = $rdvj['datefin'];
+						}
+						if($rdvj['date']>$fin)	{
+							$debb = true;
+						}						
+					}
+					/* On complete si il y a de la place libre a la fin de la plage horraire */
 					
+					if($derd<$fin){
+						if(isset($derdd)&&$derdd>$derd&&isset($debb)){
+							
+								$debutad = $derdd;
+							
+						}
+						else{
+							$debutad = $derd;
+						}
+						
+						$finad = $fin;
+						echo '<li class="md-trigger plagelibre test3" data-modal="addrdv" data-date="'.date("d/m/Y",$debutad).'" data-heure="'.date("H:i",$debutad).'" data-type="'.$pla['type'].'" data-f="'.date("H:i",$finad).'" data-min="'.$pla['duree'].'" style="top: '.top($debutad,$debutj).'px; height: '.height($debutad, $finad).'px;"><span>+ajouter</span></li>';
+						$heightot = $heightot + height($debutad, $finad);
+					}
 				}
-				else{
-					$debutad = $derd;
-				}
-				
-				$finad = $fin;
-				echo '<li class="md-trigger plagelibre test3" data-modal="addrdv" data-date="'.date("d/m/Y",$debutad).'" data-heure="'.date("H:i",$debutad).'" data-type="'.$pla['type'].'" data-min="'.$pla['duree'].'" style="top: '.top($debutad,$debutj).'px; height: '.height($debutad, $finad).'px;"><span>+ajouter</span></li>';
-				$heightot = $heightot + height($debutad, $finad);
 			}
-		}
-		}
-		else{
-			echo "<div class='nomjour'>".$nomfer."</div>";
+			else{
+				echo "<div class='nomjour'>".$nomfer."</div>";
+			}
 		}
 		return $heightot;
 	}
@@ -530,6 +534,14 @@ $motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
 		   	$nojour = "dimanche";
 	   	}
 	   	return $nojour;
+	}
+	function tmsptom($date){
+		$debd = date("d/m/Y",$date);
+		$debd = str_replace('/', '-', $debd);
+		$debd = strtotime($debd);
+		$difs = $date - $debd;
+		$difm = $difs / 60;
+		return $difm;
 	}
 	
 ?>

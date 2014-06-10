@@ -84,29 +84,12 @@
 				 echo '<script>$(document).ready(function(){$("#addpat").addClass("md-show");});</script>';
 			 }
 			 else{
+			 	
 			 	if(!isset($makelink)){
 					$req = $bdd->prepare('INSERT INTO utilisateurs (nom,prenom,email,tel,type,datenaissance,sexe,adresse) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
 					$req->execute(array($nom, $prenom, $email, $tel, $_POST['type'], $dateb, $sexe, $adresse));
 					
-					$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
-					$emailpati = $emailpat->fetchAll();
-					$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
-					$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
-					$msg[]="Le patient a bien été créé";
-					if(!empty($email)){
-						$to = $email;
-						$subject = 'Docteur '.$nommedic[0]['nom'].' vous a ajouté a ses patients';
-					    $message = '<p>Bonjour '.$prenom.' '.$nom.',</p>
-					    <p>Le docteur '.$nommedic[0]['nom'].' vous a bien ajouté à ses patients, vous pouvez désormais prendre rendez-vous avec ce médecin.</p>';
-					    
-					    $headers = 'From: \"Allomedic\"<noreply@allomedic.com>' . "\r\n" .
-					     'MIME-Version: 1.0' . "\r\n" .
-					     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-					     mail($to, $subject, $message, $headers);
-					}
-				}
-				else{
-					$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
+					$emailpat = $bdd->query("select id from utilisateurs where nom='$nom' and prenom='$prenom'");
 					$emailpati = $emailpat->fetchAll();
 					$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
 					$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
@@ -121,8 +104,28 @@
 					     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 					     mail($to, $subject, $message, $headers);
 					}
+				}
+				else{
+					$emailpat = $bdd->query("select id from utilisateurs where email='$email'");
+					$emailpati = $emailpat->fetchAll();
+					$req = $bdd->prepare('INSERT INTO liens (idpat, idmed) VALUES(?, ?)');
+					$req->execute(array($emailpati[0]['id'], $_SESSION['userid']));
+					$msg[]="Le patient a bien été créé";
+					
+					if(!empty($email)){
+						$to = $email;
+						$subject = 'Docteur '.$nommedic[0]['nom'].' vous a ajouté a ses patients';
+					    $message = '<p>Bonjour '.$prenom.' '.$nom.',</p>
+					    <p>Le docteur '.$nommedic[0]['nom'].' vous a bien ajouté à ses patients, vous pouvez désormais prendre rendez-vous avec ce médecin.</p>';
+					    
+					    $headers = 'From: \"Allomedic\"<noreply@allomedic.com>' . "\r\n" .
+					     'MIME-Version: 1.0' . "\r\n" .
+					     'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					     mail($to, $subject, $message, $headers);
+					}
 
 				}
+				
 			}
 		}
 	}

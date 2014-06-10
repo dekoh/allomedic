@@ -31,7 +31,7 @@ $(".sectrdv").click(function(){
 	$(".closefeed").click(function(){
 		$(this).parent(".feedback").fadeOut();
 	});
-	$(".feedback").delay(3000).fadeOut("slow");
+	$(".feedback").delay(4000).fadeOut("slow");
 	$(".md-trigger").click(function(){
 		var datadate = $(this).data("date");
 		var datahdeb = $(this).data("hdeb");
@@ -64,6 +64,8 @@ $(".sectrdv").click(function(){
 		$("#modifemail #inputemail").val(dataemail);
 		$("#modifnom #inputnom").val(datanom);
 		$("#modifnom #inputprenom").val(dataprenom);
+		$("#addpat #inputprenom").val(dataprenom);
+		$("#addpat #inputnom").val(datanom);
 		$("#modiftel #inputtel").val(datatel);
 		$("#modifadr #champ-adresse").html(dataadr);
 		$("#modifsexe #selectsexe").val(datasexe).attr("selected", "selected");

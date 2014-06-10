@@ -111,7 +111,7 @@ error_reporting(E_ALL);
 			    		if($profil[0]['id']!=$_SESSION['userid']||$_SESSION['type']=="med"){
 				    	
 			    	?>
-			    	<?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<button  class="md-trigger alert expand" data-modal="suppat">Supprimer le patient</button>';}?>
+			    	<?php if($profil[0]['type']=="pat"){if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<button  class="md-trigger alert expand" data-modal="suppat">Supprimer le patient</button>';}}?>
 			    	<?php
 			    		}
 			    	?>
@@ -133,6 +133,7 @@ error_reporting(E_ALL);
 				    	<h4>Date de naissance:<?php if($_SESSION['userid']==$profil[0]['id']||isset($modiok)){echo '<span class="modifbout md-trigger" data-modal="modifdatenaissance" data-dn="'.$profil[0]['datenaissance'].'">Modifier</span>';}?></h4>
 				    	<p><?php echo $profil[0]['datenaissance'].' ('.age($profil[0]['datenaissance']).'ans)';?></p>
 			    	</div>
+			    	
 		    	</div>
 		    			 <?php
 			    			 }
@@ -141,6 +142,54 @@ error_reporting(E_ALL);
 			    			 }
 		    			 ?>   	
 	    	</div>
+	    	<?php
+	    		if($_SESSION['type']=="med" && $profil[0]['type']=="pat"){
+	    	?>
+	    	<div id="content" class="mesrdv">
+		    	<div class="col pr-5">
+			    	<h1>Anciens rendez-vous</h1>
+			    	<ul>
+			    			
+			    		<?php
+			    			$dateauj = time();
+			    			$idpatient = $profil[0]['id'];
+				    		$rdv = $bdd->query("SELECT * FROM rdv WHERE idpat=$idpatient and annulation=0 and date<$dateauj and idmed=$iduser order by date desc");
+				    		while($irdv = $rdv->fetch()){
+				    			$idmedic = $irdv['idmed'];
+				    			$medic = $bdd->query("SELECT * FROM utilisateurs WHERE id=$idmedic");
+				    			$imedic = $medic->fetchAll();
+					    		echo '<li><a href="rdv/'.$irdv['id'].'"><span class="date">'.date("d/m/Y",$irdv['date']).'</span> <span class="nommedic">Dr. '.$imedic[0]['nom'].'</span></a></li>';
+				    		}
+			    		?>
+			    	</ul>
+		    	</div>
+		    	<div class="col pr-5">
+			    	<h1>Futurs rendez-vous</h1>
+			    	<ul>
+			    		<?php
+			    			$dateauj = time();
+				    		$rdv = $bdd->query("SELECT * FROM rdv WHERE idpat=$idpatient and annulation=0 and date>$dateauj and idmed=$iduser order by date");
+				    		while($irdv = $rdv->fetch()){
+				    			if($irdv['type']=="rdv"){
+						    		$typederdv = "au cabinet";
+					    		}
+					    		if($irdv['type']=="domicile"){
+						    		$typederdv = "au domicile";
+					    		}
+				    			$idmedic = $irdv['idmed'];
+				    			$medic = $bdd->query("SELECT * FROM utilisateurs WHERE id=$idmedic");
+				    			$imedic = $medic->fetchAll();
+					    		echo '<li><a href="rdv/'.$irdv['id'].'"><span class="date">'.date("d/m/Y",$irdv['date']).' à '.date("H:i",$irdv['date']).'</span> <span class="nommedic">Dr. '.$imedic[0]['nom'].'</span> - <span class="lieu">'.$typederdv.'</span></a></li>';
+				    		}
+			    		?>
+				    	
+
+		    	</div>
+	    	</div>
+	    	<?php
+		    	}
+	    	?>
+
 	    </div>
 	    <?php
 		    include('includes/modal.inc.php');	
