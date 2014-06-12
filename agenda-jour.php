@@ -125,47 +125,6 @@ error_reporting(E_ALL);
 			    	}
 		    	?>
 		    	
-		    	
-		    	<!--
-<div class="col modrdv">
-			    	<span class="md-trigger" data-modal="modrdv" data-type="rdv">modifier</span> <span>annuler</span>
-		    	</div>
--->
-		    	
-		    	<!--
-<hr/>
-		    	<div class="lieuheure col">
-			    	<div class="timing">08h45-09h00</div>
-			    	<div class="lieudurdv">au cabinet</div>
-		    	</div>
-		    	<a href="profil/6" class="avatar col" style="background: url(images/profilmen.jpg) no-repeat; background-size: cover;">av</a>
-		    	<div class="quipq col">
-			    	<div class="nomdupat"><a href="profil/6">Anderson Walter</a></div>
-			    	<div class="motifdupat">Motif: douleur au poignet</div>
-		    	</div>
-		    	
-		    	<hr/>
-		    	<div class="lieuheure col">
-			    	<div class="timing">09h15-09h30</div>
-			    	<div class="lieudurdv">au cabinet</div>
-		    	</div>
-		    	<a href="profil/10" class="avatar col" style="background: url(images/profilwomen.jpg) no-repeat; background-size: cover;">av</a>
-		    	<div class="quipq col">
-			    	<div class="nomdupat"><a href="profil/10">Neil April</a></div>
-			    	<div class="motifdupat">Motif: douleur au poignet</div>
-		    	</div>
-		    	
-		    	<hr/>
-		    	<div class="lieuheure col">
-			    	<div class="timing">09h30-09h45</div>
-			    	<div class="lieudurdv">au cabinet</div>
-		    	</div>
-		    	<a href="profil/17" class="avatar col" style="background: url(images/profilmen.jpg) no-repeat; background-size: cover;">av</a>
-		    	<div class="quipq col">
-			    	<div class="nomdupat"><a href="profil/17">Gardner Edward</a></div>
-			    	<div class="motifdupat">Motif: douleur au poignet</div>
-		    	</div>
--->
 	    	</div>
 	    	</div>
 	    	</div>

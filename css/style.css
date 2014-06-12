@@ -208,6 +208,7 @@ header #nav li a#patients:before{
 .pricing-table{
 	border-radius: 8px;
 	overflow: hidden;
+	position: relative;
 }
 .blo h2{
 	font-weight: bold;
@@ -237,7 +238,11 @@ header #nav li a#patients:before{
 	opacity: .3;
 	}
 .bientot{
+	transform: scale(0.9);
+	-moz-transform: scale(0.9);
 	-webkit-transform: scale(0.9);
+	-o-transform: scale(0.9);
+	-ms-transform: scale(0.9);
 }
 .bientot:after{
 	content: 'Bientôt...';
@@ -505,6 +510,9 @@ button:hover, .button:hover{
 #outinputdate, #outinputdatecon, #outinputdateb, #outinputheure{
 	width: 85%;
 	display: inline-block;
+}
+#idinputpatient{
+	clear: both;
 }
 .pr-5.col{
 	width: 49%;
@@ -903,6 +911,7 @@ td.user-name {
 .modifmenu{
 	position: absolute;
 	bottom: -50px;
+	margin-left: -14px;
 	height: 50px;
 	width: 100%;
 	transition: all .3s ease-out;

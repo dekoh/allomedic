@@ -1,13 +1,7 @@
 <?php
 	function validateDate($date)
 	{
-		/*
-$motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
-	 	if(preg_match($motif,$date)){
-			 $error = true; 
-		}
-		else{
-*/
+		
 			list($dd,$mm,$yyyy) = explode('/',$date);
 			if (!checkdate($mm,$dd,$yyyy)) {
 			        $error = true;
@@ -15,13 +9,7 @@ $motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
 			else{
 				$error = false;
 			}
-		/* } */
-		/*
-
-	    preg_match('/(?<jour>\w+)/ (?<mois>\d+)/ (?<annee>\d+)/', $date, $matches);
-	    $matches
-*/
-	    
+		
 	    return $error;
 	}
 	function validateHeure($heure)
@@ -132,8 +120,9 @@ $motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
 			
 			$heightot = $heightot + height($rdvd['date'],$rdvd['datefin']);
 		}
-		if($datelendemain>time()){
-			if($fer!=true){						
+		
+		if($fer!=true){			
+			if($datelendemain>time()){			
 				$plage = $bdd->query("select * from plages where idmed=$id and jour='$jour'");
 				while($pla = $plage->fetch()){
 					$debut = $pla['debut'];
@@ -190,10 +179,11 @@ $motif = "#^[0-9]{1,2}+/[0-9]{1,2}+/[0-9]{4,}$#";
 					}
 				}
 			}
-			else{
+			
+		}
+		else{
 				echo "<div class='nomjour'>".$nomfer."</div>";
 			}
-		}
 		return $heightot;
 	}
 	function afficherPlagelibre($datejour,$jour,$bdd,$id){

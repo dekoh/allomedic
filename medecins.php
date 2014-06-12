@@ -42,21 +42,7 @@ $setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répe
 	    		</a>';
 		    		}
 	    		?>
-	    		<!--
-<a href="profil/1" class="col">
-		    		<div class="avatar" style="background:url(images/avatar/1.jpg) no-repeat; background-size: cover;"></div>
-		    		<h1>Dr. Cabrol</h1>
-		    		<p>Médecin généraliste</p>
-		    		
-	    		</a>
-	    		<a href="profil/1" class="col">
-		    		<div class="avatar" style="background:url(images/avatar/102.jpg) no-repeat; background-size: cover;"></div>
-		    		<h1>Dr. Bérigné</h1>
-		    		<p>Cardiologue</p>
-		    		
-	    		</a>
--->
-	    	</div>
+	    			    	</div>
 	    </div>
 	    <?php
 		    include('includes/modal.inc.php');	
@@ -68,10 +54,6 @@ $setRoot = true; // à mettre sur toutes les pages dont l'url comporte des répe
 				 				 
 			});
 	    </script>
-	    <!--
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-	    <script src="js/jquery.stickyheader.js"></script>
--->
     </body>
 </html>
 <?php

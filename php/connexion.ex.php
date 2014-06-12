@@ -27,7 +27,7 @@ document.location.href="f/..";
             	$email= $_POST['email'];
             	//on verifie si la case se souvenir de moi est coché
             	if(isset($_POST['remember'])){
-	            	setcookie('authentification', $req[0]['id'] . '-' . sha1($pass), time() * 3600 * 24 * 7, '/', 'localhost', false, true);
+	            	setcookie('authentification', $req[0]['id'] . '-' . sha1($email.$pass), time() * 3600 * 24 * 7, '/', 'localhost', false, true);
             	}
                 //On enregistre son pseudo dans la session username et son identifiant dans la session userid 
                 $_SESSION['userid'] = $req[0]['id'];
@@ -40,6 +40,4 @@ document.location.href="f/..";
             }
         } 
     }
-    
-   
 ?>

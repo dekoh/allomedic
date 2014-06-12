@@ -20,7 +20,6 @@
 	$idp = $bdd->query("select * from rdv where idmed=$id and date between $datetmstp and $datetmstpfin");
 	$nbrdv = $idp->rowCount();
 	echo $nbrdv;
-	
 ?>
 </span><h2>
 <?php

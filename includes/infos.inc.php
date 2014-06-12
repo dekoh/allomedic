@@ -1,7 +1,6 @@
 
 <h1 class="titreinfo">Allomedic c'est quoi?</h1>
 <div class="blo">
-	
 	<div class="col pr-5">
 		<h2>Gestion des rendez-vous</h2>
 		<p>La gestion des rendez-vous vous permet d'ajouter des rendez-vous et de les visualiser dans un agenda personnalisable.</p>
@@ -11,7 +10,6 @@
 	<div id="imac" class="col pr-5"></div>
 </div>
 <div class="blo">
-	
 	<div id="mbp" class="col pr-5"></div>
 	<div class="col pr-5">
 		<h2>Prise de rendez-vous en ligne</h2>
@@ -20,7 +18,6 @@
 	</div>
 </div>
 <div class="blo">
-	
 	<div class="col pr-5">
 		<h2>Gestion des patients</h2>
 		<p>La gestion des patients vous permet d'ajouter des patients et de les modifier.</p>
@@ -63,7 +60,6 @@
 	  <li class="title">Perso</li>
 	  <li class="price">Devis</li>
 	  <li class="description">Demandez votre devis gratuit pour une offre ajusté à vos besoins.</li>
-	    <li class="cta-button"><a class="button" href="contact">Demande de devis</a></li>
-
+	  <li class="cta-button"><a class="button" href="contact">Demande de devis</a></li>
 	</ul>
 </div>

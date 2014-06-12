@@ -1,17 +1,12 @@
-
 <div id="formcon">
 <form action="f/.." class="con" method="post">        
        <h1>Connexion</h1>
 		<p>
-	      <!-- <label for="login">Pseudo:</label> -->
 	      <input type="text" name="email" id="email" placeholder="eMail" <?php if(isset($_POST['email'])){echo "value='".$_POST['email']."'";}?>>
 	    </p>
-	
 	    <p>
-	      <!-- <label for="password">Mot de passe:</label> -->
 	      <input type="password" name="password" id="password" placeholder="Mot de passe">
 	    </p>
-	
 	    <p>
 		    <input type="checkbox" name="remember" id="remember"/><label for="remember" class="remember">Se souvenir de moi</label>
 	    </p>
