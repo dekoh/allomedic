@@ -167,13 +167,13 @@
 				//Début des vérifications de sécurité...
 				if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
 				{
-				     $erreur = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
+				     $erreu = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
 				}
 				if($taille>$taille_maxi)
 				{
-				     $erreur = 'Le fichier est trop gros...';
+				     $erreu = 'Le fichier est trop gros...';
 				}
-				if(!isset($erreur)) //S'il n'y a pas d'erreur, on upload
+				if(!isset($erreu)) //S'il n'y a pas d'erreur, on upload
 				{
 					if(!isset($modiok)){
 						 $alert[] = "Vous n'avez pas les droits pour modifier ce profil!";
@@ -202,7 +202,7 @@
 				  }
 				else
 				{
-				     echo $erreur;
+				     echo $erreu;
 				}
 			}
 		}
