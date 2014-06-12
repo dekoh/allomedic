@@ -19,8 +19,10 @@ error_reporting(E_ALL);
    
     <body>
     	
-    	<?php
-    			
+    	<?php	
+    		if(isset($_SESSION['userid'])){
+    			$iduser = $_SESSION['userid'];
+    		}
 				include('includes/header.inc.php');
 						?>
 	    <div id="container">
@@ -86,12 +88,18 @@ error_reporting(E_ALL);
 		    		}
 	    		}
 	    		if(isset($nom)){
-		    		echo "<h2>Bonjour ".$prenom." ".$nom.",</h2><h3> entrez votre nouveau mot de passe:</h3>
+	    			if(isset($_SESSION['userid'])){
+		    			echo "Vous devez vous déconnecter pour atteindre cette page.";
+	    			}
+	    			else{
+		    			echo "<h2>Bonjour ".$prenom." ".$nom.",</h2><h3> entrez votre nouveau mot de passe:</h3>
 		    		<form action='nmp' method='post'>
 		    			<input type='text' name='nmp' placeholder='Mot de passe (Doit contenir entre 6 et 22 caractères)'/>
 		    			<input type='hidden' name='email' value='".$email."'/>
 		    			<button class='md-submit'>Valider</button>
 		    		</form>";
+	    			}
+		    		
 	    		}
 	    		else{
 		    		if(isset($mdpok)){
