@@ -68,7 +68,7 @@ error_reporting(E_ALL);
 			    		echo ', '.age($datepat).'ans';
 			    	}
 			    	echo '</span>
-			    	<span class="motifdupat">  > '.$rdva['motif'].'</span><span class="motifdupat">  > '.$rdva['raison'].'</span>
+			    	<span class="motifdupat">  > '.$rdva['motif'].'</span><span class="motifdupat">  > '.stripslashes($rdva['raison']).'</span>
 		    	</div></a></div>';
 		    		$idrdv = $rdva['id'];
 	   	    		$req = $bdd->query("UPDATE rdv SET lu=1 WHERE id=$idrdv");
